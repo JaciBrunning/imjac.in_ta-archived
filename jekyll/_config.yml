@@ -17,7 +17,7 @@ safe: false
 
 # Build settings
 markdown: kramdown
-destination: ../html/ta/
+destination: ../_build/html/ta/
 
 plugins: ['jekyll-paginate']
 
