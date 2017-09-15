@@ -21,6 +21,8 @@ end
 MODULES = {}
 SUBDOMAINS = []
 
+BUILDERS = {}
+
 module Kernel
     def define_webcore_module sym, clazz
         MODULES[sym] = clazz
@@ -32,19 +34,41 @@ module Kernel
         SUBDOMAINS << [domain_regex, module_sym, options]
         puts "Registering Subdomain(#{domain_regex.inspect}) -> Module(#{module_sym}) (#{options})..."
     end
+
+    def define_builder sym, builder
+        BUILDERS[sym] = builder
+    end
+
+    def get_all_builders
+        BUILDERS
+    end
+
+    def web_root
+        File.dirname(__FILE__)
+    end
 end
 
+puts "Loading Libraries..."
 Dir['modules/**/library.rb'].each do |p|     # Preload files that can be used in other modules (e.g. setting up cross-module APIs)
-    puts "Preloading Library #{p}..."
+    puts "Loading Library #{p}..."
     require_relative p
 end
+puts
 
+puts "Loading Modules..."
 Dir['modules/**/module.rb'].each do |p|
     puts "Loading #{p}..."
     require_relative p
 end
+puts
 
+puts "Building Resources..."
+BUILDERS.each do |name, builder|
+    puts "Building #{name}..."
+    builder.run
+end
 
+puts "Starting..."
 SUBDOMAINS.sort_by { |x| x[2][:priority] }.each do |sub|
     use SubdomainMiddleware, sub, MODULES[sub[1]]
     run Proc.new { |env| [404, {}, ['Not Found']] }
