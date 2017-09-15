@@ -1,0 +1,12 @@
+---
+layout: post
+title: "Starting Over"
+date: 2016-04-14 02:15:57
+categories: general
+---
+I've decided to start over on this blog. All the old, irrelevant posts have been archived and removed for the sake of being able to take this website in a new direction. 
+
+I'm hoping to post a little bit more about my programming work, whether it be any discoveries that I make, demonstrations or showcases. Hopefully this will help my site fit better into the purpose I initially intended for it to fulfill.
+
+Ciao for now,  
+ ~Jaci

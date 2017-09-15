@@ -1,0 +1,56 @@
+---
+layout: default
+title: Home
+weight: 1
+---
+
+<div class="home">
+
+  <ul class="post-list">
+    {% for post in paginator.posts %}
+      {% unless post.ignore %}
+        <li class="post-container">
+
+          <div class="post-main">
+              <h2 class="post-link">
+                <a class="post-link" href="{{ post.url | prepend: site.baseurl }}"><i class="fa fa-pencil">&nbsp;</i>{{ post.title }}</a>
+              </h2>
+              <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+              <div class="excerpt">{{ post.excerpt }}</div>
+          </div>
+            <div class="inl-block">
+              <div class="share">
+                <a class="share" target="_blank" href="{{ post.url | prepend: site.baseurl }}"><i class="fa fa-link"></i></a>
+                <a class="share" target="_blank" href="https://twitter.com/intent/tweet?text={{ post.title }}&url={{ post.url | prepend: site.baseurl | prepend: site.url }}"><i class="fa fa-twitter"></i></a>
+                <a class="share" target="_blank" href="https://www.reddit.com/submit?url={{ post.url | prepend: site.baseurl | prepend: site.url }}&title={{ post.title }}"><i class="fa fa-reddit-square"></i></a>
+              </div>
+              <div class="tags">
+                {% for category in post.categories %}
+                <a class="tags">#{{ category }}&nbsp;</a>
+                {% endfor %}
+              </div>
+            </div>
+
+            <a class="read-more" href="{{ post.url | prepend:site.baseurl }}">Read More</a>
+        </li>
+      {% endunless %}
+    {% endfor %}
+  </ul>
+
+  {% if paginator.total_pages > 1 %}
+  <div class="pagination centre">
+    {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | prepend: site.baseurl }}" class="previous"><i class="fa fa-chevron-left"></i></a>
+    {% else %}
+    <i class="fa fa-chevron-left disabled"></i>
+    {% endif %}
+    <a class="current">{{ paginator.page }}</a>
+    {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | prepend: site.baseurl }}" class="next"><i class="fa fa-chevron-right"></i></a>
+    {% else %}
+    <i class="fa fa-chevron-right disabled"></i>
+    {% endif %}
+  </div>
+  {% endif %}
+
+</div>

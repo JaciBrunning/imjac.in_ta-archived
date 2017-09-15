@@ -1,0 +1,32 @@
+# Site settings
+title: I'm Jac.in/ta
+email: jaci.brunning@gmail.com
+description: > # this means to ignore newlines until "baseurl:"
+  Jaci R. A running log of what a young software dev gets up to in her spare time. FRC Team 5333 / OpenRIO / ICAS Comp Sci #1 2014 / Scitech GT
+baseurl: "/ta"
+url: "http://imjac.in" # the base hostname & protocol for your site
+twitter_username: JacisNonsense
+github_username:  JacisNonsense
+
+paginate: 9
+paginate_path: "/page/:num/"
+
+permalink: "/post/:year/:month/:day/:title.html"
+
+safe: false
+
+# Build settings
+markdown: kramdown
+destination: ../html/ta/
+
+plugins: ['jekyll-paginate']
+
+#kramdown:
+#   input: GFM
+#   syntax_highlighter: rouge
+
+#excerpt_separator: ""
+
+exclude:
+  - "*_DEMO"
+  - "*_DISABLED"
