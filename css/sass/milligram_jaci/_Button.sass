@@ -23,12 +23,16 @@ input[type='submit']
 	text-decoration: none
 	text-transform: uppercase
 	white-space: nowrap
+	opacity: 1
+	transition: all .2s ease-out
+	-moz-transition: all .2s ease-out
+	-webkit-transition: all .2s ease-out
 
 	&:focus,
 	&:hover
-		background-color: $color-secondary
+		background-color: #faf5ff
 		border-color: $color-secondary
-		color: $color-initial
+		color: #606c76
 		outline: 0
 
 	&[disabled]

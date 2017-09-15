@@ -83,7 +83,7 @@ extern "C" void memcpy_threshold_asm(uint8_t *dest, const uint8_t *src, int coun
 
 Now, our assembly file, `memory.S`
 
-```asm
+```nasm
 .global memcpy_threshold_asm
 memcpy_threshold_asm:
     push {fp}
@@ -91,47 +91,47 @@ memcpy_threshold_asm:
 ```
 This is the basis of our function. The `.global` and `memcpy_threshold` are our definition of the function. The last 2 lines are used to push a new Stack Frame (used by C)
 
-```asm
+```nasm
 lsr r2, #4
 ```
 `lsr` is the assembly instruction for "Logical Right Shift". What we're actually doing here is dividing our `count` argument (stored in r2) by 16, as `2^4 == 16`. Shifting operations are typically much faster than math operations, so try to use them where possible. We're dividing by 16 as we can do 16 numbers at a time. This is our loop counter.
 
-```asm
+```nasm
 vdup.8 q3, r3
 ```
 Here we're just copying the byte value of r3 (our threshold value) into register q3 in 8-bit (1 byte) chunks, filling q3 with 16 copies of our threshold value.
 
-```asm
+```nasm
 _loop:
    vld1.64 d0, [r1]!
    vld1.64 d1, [r1]!
 ```
 Here we have begun the loop, and have shifted our `src` pointer (stored in r1) into the 64-bit NEON Register `d0`. The `!` will automatically add how many bytes were transferred (in this case, 64/8 == 8) to our pointer. We do this again into d1 to get another 64 bits, taking 128 bits (16 bytes) in total in the register pair d0, d1.
 
-```asm
+```nasm
    vcgt.u8 q1, q0, q3
 ```
 Here we are doing a single greater-than comparison on q0 (d0, d1 i.e. our source bytes) and q3 (our threshold), and storing the result in q1. This function stores the result as either all 1s (255) if it is greater, or all 0s (0) otherwise.
 
-```asm
+```nasm
    vand.u8 q2, q1, q0
 ```
 Here are are doing a bitwise AND operation between our comparison result (q1) and our original numbers (q0). This AND operation will give us back the original number if our comparison is true (greater than threshold), or 0 otherwise. We store this in q2
 
-```asm
+```nasm
    vst1.64 d4, [r0]!
    vst1.64 d5, [r0]!
 ```
 Here we are storing our resultant (q2 = d4, d5) into our destination pointer (stored in r0). This is the opposite of the `vld` instruction we saw earlier.
 
-```asm
+```nasm
    sub r2, r2, #1
    cmp r2, #0
    bgt _loop
 ```
 This is used to run the loop. First, we subtract 1 from our counter. If the new value of the counter is greater than 0, jump up to `_loop`. If not, continue on.
 
-```asm
+```nasm
 sub sp, fp, #0
 pop {fp}
 bx lr

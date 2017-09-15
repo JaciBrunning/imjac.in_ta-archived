@@ -7,9 +7,6 @@ layout: default
     <h1 class="post-title">{{ page.title }}</h1>
     <p class="post-meta">{{ page.date | date: "%b %-d, %Y" }}{% if page.author %} • {{ page.author }}{% endif %}{% if page.meta %} • {{ page.meta }}{% endif %}</p>
 
-    <a class="share" target="_blank" href="{{ page.url | prepend: site.baseurl }}"><i class="fa fa-link"></i></a>
-    <a class="share" target="_blank" href="https://twitter.com/intent/tweet?text={{ page.title }}&url={{ page.url | prepend: site.baseurl | prepend: site.url }}"><i class="fa fa-twitter"></i></a>
-    <a class="share" target="_blank" href="https://www.reddit.com/submit?url={{ page.url | prepend: site.baseurl | prepend: site.url }}&title={{ page.title }}"><i class="fa fa-reddit-square"></i></a>
   </header>
 
   <article class="post-content">

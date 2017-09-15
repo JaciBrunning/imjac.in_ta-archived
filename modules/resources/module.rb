@@ -17,6 +17,7 @@ class CSSBuilder < Builder
     build do
         FileUtils.mkdir_p CSS_BUILD_FOLDER
         `sass -I css/sass -I css/sass -t compressed #{File.join(web_root(), 'css/sass/milligram_jaci/milligram_jaci.sass')} #{File.join(CSS_BUILD_FOLDER, 'milligram_jaci.css')}` 
+        `sass -I css/sass -I css/sass -t compressed #{File.join(web_root(), 'css/sass/blog/blog.scss')} #{File.join(CSS_BUILD_FOLDER, 'blog.css')}`
     end
 end
 

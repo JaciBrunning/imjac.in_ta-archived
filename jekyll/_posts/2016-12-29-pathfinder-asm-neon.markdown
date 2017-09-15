@@ -78,7 +78,7 @@ The issue is, that we need to go 0, 1, 2, 3, and then 4, 5, 6, 7. If we're doing
 
 The way to overcome this is through the use of the `.rodata` section of the final binary. The `.rodata` section stands for `Read-Only Data`, and is used to store data that is immutable at runtime, and immediately available in memory (it's the equivilent of `const` in C). At the top of the ASM file we have the following: 
 
-```asm
+```nasm
 .section .rodata
     f32_step_1:
         .float 0
@@ -90,7 +90,7 @@ The way to overcome this is through the use of the `.rodata` section of the fina
 
 And later in the file, we have: 
 
-```asm
+```nasm
 // Write 'segment step' into q5
 ldr r6, =f32_step_1
 vld1.32 d10, [r6]
@@ -103,7 +103,7 @@ What we're doing is loading the float values `[0, 1, 2, 3]` into the Neon regist
 Furthermore, we've also zero'd register `q4`, which we will be using as the 'segment index offset'.
 
 At the beginning of every loop, we run the following: 
-```asm
+```nasm
 vadd.f32 q6, q4, q5
 ```
 

@@ -17,13 +17,13 @@ safe: false
 
 # Build settings
 markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
 destination: ../_build/html/ta/
 
 plugins: ['jekyll-paginate']
-
-#kramdown:
-#   input: GFM
-#   syntax_highlighter: rouge
 
 #excerpt_separator: ""
 
