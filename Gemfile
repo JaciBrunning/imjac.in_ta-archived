@@ -5,6 +5,9 @@ gem "rack", "1.3"
 gem "sinatra", "1.3.0"
 gem "thin", "1.7.2"
 
+# Database
+gem "sqlite3", "1.3.13"
+
 # Jekyll
 gem "jekyll", "3.5.2"
 gem "jekyll-paginate", "1.1.0"

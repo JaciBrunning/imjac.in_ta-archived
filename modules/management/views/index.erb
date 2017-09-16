@@ -44,7 +44,6 @@
     <div class="column">
         <h4> Jobs </h4>
 
-        <h5> Workers </h5>
         <table>
             <tr>
                 <th> Worker # </th>
@@ -58,11 +57,10 @@
             <% end %>
         </table>
 
-        <h5> Queue </h5>
         <table>
             <tr>
-                <th> Job </th>
-                <th> Job </th>
+                <th> Queued Job </th>
+                <th> Queued Job </th>
             </tr>
             <% Jobs.jobs.each_slice(2).each do |job1, job2| %>
                 <tr>

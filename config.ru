@@ -1,6 +1,5 @@
 require 'rack'
 $:.unshift File.dirname(__FILE__)
-require 'prestart'
 
 class SubdomainMiddleware
     def initialize(app, subs, mods)
@@ -50,6 +49,8 @@ module Kernel
         File.dirname(__FILE__)
     end
 end
+
+require 'prestart'
 
 puts "Loading Libraries..."
 Dir['modules/**/library.rb'].each do |p|     # Preload files that can be used in other modules (e.g. setting up cross-module APIs)
