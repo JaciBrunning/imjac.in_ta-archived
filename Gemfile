@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # Server
-gem "rack"
+gem "rack", "1.3"
 gem "sinatra"
 gem "thin"
 
