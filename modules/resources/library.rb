@@ -1,12 +1,29 @@
 require 'sinatra/base'
 require 'builder'
 require 'fileutils'
+require 'utils'
 
 RES_BUILD_FOLDER = File.join(web_root(), '_build/resources')
 CSS_BUILD_FOLDER = File.join(RES_BUILD_FOLDER, 'css')
 
-class Resources < Sinatra::Base
-    set :public_folder, RES_BUILD_FOLDER
+module Resources
+    def self.resource_routes app
+        app.get '/res/*' do
+            cache_control :public, max_age: 60
+            
+            resource = params['splat'].first
+            if resource.nil? || resource.empty?
+                status 404
+            else
+                file = File.join(RES_BUILD_FOLDER, Utils.strippath(resource))
+                if File.directory?(file) || !File.exists?(file)
+                    status 404
+                else
+                    send_file file
+                end 
+            end
+        end
+    end
 end
 
 class CSSBuilder < Builder
@@ -21,6 +38,4 @@ class CSSBuilder < Builder
     end
 end
 
-define_webcore_module :resources, Resources
-define_virtual_server /r\..*/, :resources
 define_builder :css, CSSBuilder.new

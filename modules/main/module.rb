@@ -12,21 +12,7 @@ class Main < Sinatra::Base
         send_file File.join(settings.public_folder, 'ta/index.html')
     end
 
-    # Usually this would be accessed from r.imjac.in, but in testing the domain name is different, so it's not
-    # possible to change the uri for the resources, so we tunnel it here instead.
-    get '/res/*' do
-        resource = params['splat'].first
-        if resource.nil? || resource.empty?
-            status 404
-        else
-            file = File.join(File.join(web_root(), '_build/resources'), Utils.strippath(resource))
-            if File.directory?(file) || !File.exists?(file)
-                status 404
-            else
-                send_file file
-            end 
-        end
-    end
+    Resources.resource_routes(self)
 
     get '/' do
         redirect '/ta'

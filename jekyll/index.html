@@ -12,7 +12,7 @@ weight: 1
         <div class="post-container">
           <div class="post-main">
               <h3 class="post-link">
-                <a class="post-link" href="{{ post.url | prepend: site.baseurl }}"><i class="fa fa-pencil">&nbsp;</i>{{ post.title }}</a>
+                <a class="post-link" href="{{ post.url | prepend: site.baseurl }}"><i class="fa fa-pencil" aria-hidden="true"></i>{{ post.title }}</a>
               </h3>
               <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
           </div>

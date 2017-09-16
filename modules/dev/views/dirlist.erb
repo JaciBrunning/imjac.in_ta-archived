@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Directory Listing for <%= @path.empty? ? "/" : @path %></title>
+    <link rel="stylesheet" href="/res/css/milligram_jaci.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/b730a09ebb.css" />
+</head>
+<body>
+    <main class="wrapper">
+        <div class="container">
+            <h2> Directory Listing for <%= @path.empty? ? "/" : @path %> </h2>
+            <table>
+                <tr>
+                    <th> Name </th>
+                    <th> Size </th>
+                </tr>
+                <% unless @path.empty? || @path == '/' %>
+                    <tr>
+                        <td> <a href="../"> <i class="fa fa-level-up" aria-hidden="true"></i> ../ </a> </td>
+                        <td> <i> Directory </i> </td>
+                    </tr>
+                <% end %>
+                <% Pathname.new(@directory).children.each do |child| %>
+                    <% dir, symlink = [File.directory?(child), File.symlink?(child)] %>
+                    <tr>
+                        <td> <a href="<%= File.basename(child) %><%= dir ? '/' : ''%>"> <i class="fa fa-<%= dir ? 'folder-open-o' : symlink ? 'long-arrow-right' :'file-o' %>" aria-hidden="true"></i> <%= File.basename(child) %> </a> </td>
+                        <td> <%= dir ? '<i>Directory</i>' : symlink ? '<i>Symbolic Link</i>' : Utils.filesize(File.size(child)) %> </td>
+                    </tr>
+                <% end %>
+            </table>
+        </div>
+    </main>
+</body>
