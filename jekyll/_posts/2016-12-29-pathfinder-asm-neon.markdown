@@ -10,6 +10,8 @@ Motion profiling has been making the rounds lately, with more and more applicati
   
 **You can see the project on GitHub [here](https://github.com/JacisNonsense/neon_pathfinder)**
 
+<!-- excerpt -->
+
 ## Results
 Before I get into how this was done, I'm going to start with why you should care. Here's the results of my testing (*all tests done on a stock-standard FRC RoboRIO*)
 

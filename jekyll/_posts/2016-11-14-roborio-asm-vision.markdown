@@ -6,6 +6,8 @@ categories: roborio, frc, asm, coprocessor, vision, kinect
 ---
  **TL;DR: We can run 30fps Vision Tracking on the RoboRIO at 7-8ms per frame, equating to only about 23% CPU Time. For scale, the FRC Network Comms program uses about 20% CPU constantly** 
 
+<!-- excerpt -->
+
 One of the 'end goals' of any FRC team is to make a fast vision tracking pipeline that works. Multiple efforts have been made to make this more and more accessible to teams, including Open-Source releases of vision libraries, language bindings, and even projects like WPI's own GRIP. I even released [our vision code for 2016](https://github.com/FRC5333/2016-Champs/tree/master/Coprocessor).
 
 It's a common thought that you _need_ a coprocessor to do any sort of decent vision tracking solution. The CPU on the RoboRIO isn't the fastest thing in the world, so many teams opt for a coprocessor, such as a Beaglebone, Raspberry Pi, Kangaroo PC or even NVIDIA's powerful Jetson board. These are all great, but can we do better? Can we possibly run a full vision pipeline, from camera to code, at 30fps, 640x480, onboard the RoboRIO itself, with room to spare for our Robot Program? The answer is: Absolutely!

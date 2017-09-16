@@ -11,6 +11,8 @@ categories: mdns, toast, frc
 - It has to be easy to use
 - It can't have external dependencies outside of the bundled software.
 
+<!-- excerpt -->
+
 WELP. In Toast Java, the Driver Station communications didn't follow those last two points. It required you to do [all this](https://github.com/Open-RIO/ToastAPI/wiki/Simulating-Joysticks-and-the-Driver-Station). Painful, right?
 
 Well, for Toast C++ I decided to try and fix this. I played around with a few ideas:
