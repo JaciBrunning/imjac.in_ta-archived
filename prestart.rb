@@ -1,0 +1,3 @@
+require 'jobs'
+
+Jobs.start

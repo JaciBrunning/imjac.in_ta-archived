@@ -10,6 +10,10 @@ class Dev < Sinatra::Base
 
     Resources.resource_routes(self)
 
+    get "/ta/?" do
+        redirect "/"
+    end
+
     get '*' do |path|
         file = File.join(settings.public_folder, Utils.strippath(path))
         if File.exist?(file)

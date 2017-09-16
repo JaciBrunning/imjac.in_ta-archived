@@ -1,5 +1,6 @@
 require 'rack'
 $:.unshift File.dirname(__FILE__)
+require 'prestart'
 
 class SubdomainMiddleware
     def initialize(app, subs, mods)
@@ -64,14 +65,8 @@ Dir['modules/**/module.rb'].each do |p|
 end
 puts
 
-puts "Building Resources..."
-BUILDERS.each do |name, builder|
-    puts "Building #{name}..."
-    builder.run
-end
-
 puts "Starting..."
 use SubdomainMiddleware, SUBDOMAINS.sort_by { |x| x[2][:priority] }, MODULES
-# SUBDOMAINS.sort_by { |x| x[2][:priority] }.each do |sub|
 run Proc.new { |env| [404, {}, ['Not Found']] }
-# end
+
+require 'startup'

@@ -22,9 +22,11 @@ class Builder
         end
     end
 
-    def run
-        puts "-> Running Builder #{self.class.name}"
-        self.class.run_clean
+    def run_build
         self.class.run_build
+    end
+
+    def run_clean
+        self.class.run_clean
     end
 end
