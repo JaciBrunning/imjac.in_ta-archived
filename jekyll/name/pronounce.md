@@ -5,7 +5,7 @@ permalink: /name/
 menu: false
 weight: 100
 javascript:
-    - name/name.js
+    - /ta/name/name.js
 ---
 #### No one ever gets my name right.
 
