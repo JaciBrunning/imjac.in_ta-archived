@@ -2,19 +2,21 @@ require 'rack'
 $:.unshift File.dirname(__FILE__)
 
 class SubdomainMiddleware
-    def initialize(app, sub, mod)
+    def initialize(app, subs, mods)
         @app = app
-        @sub = sub
-        @mod = mod.new
+        @subs = subs
+        @mods = Hash[mods.map {|name, mod| [name, mod.new]}]
     end
 
     def call(env)
         domain = env["HTTP_HOST"][/^[^:]+/]
-        if @sub[0] =~ domain
-            @mod.call(env)
-        else
-            @app.call(env)
+        @subs.each do |sub|
+            if (sub[0] =~ domain)
+                return @mods[sub[1]].call(env)
+            end
         end
+
+        @app.call(env)
     end
 end
 
@@ -69,7 +71,7 @@ BUILDERS.each do |name, builder|
 end
 
 puts "Starting..."
-SUBDOMAINS.sort_by { |x| x[2][:priority] }.each do |sub|
-    use SubdomainMiddleware, sub, MODULES[sub[1]]
-    run Proc.new { |env| [404, {}, ['Not Found']] }
-end
+use SubdomainMiddleware, SUBDOMAINS.sort_by { |x| x[2][:priority] }, MODULES
+# SUBDOMAINS.sort_by { |x| x[2][:priority] }.each do |sub|
+run Proc.new { |env| [404, {}, ['Not Found']] }
+# end
