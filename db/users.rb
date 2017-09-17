@@ -65,6 +65,11 @@ module Database
                 return tok
             end
 
+            def deauth_single token
+                return if token.nil?
+                UserToken.where(tok_string: token).delete
+            end
+
             def create username, email, name, pass
                 salt = Security::salt
                 hash = Security::hash pass, salt

@@ -1,19 +1,19 @@
 <div class="container" style="max-width: 50em">
 <% if Database::Users::User.count == 0 %>
-<h3> Create Initial User </h3>
-<form method="POST" action="newuser">
-<input type="text" placeholder="Username" name="username" required>
-<input type="text" placeholder="Email Address" name="email" required>
-<input type="text" placeholder="Full Name" name="name" required>
-<input type="password" placeholder="Password" name="password" required>
-<input type="submit" value="Login">
-</form>
+    <h3> Create Initial User </h3>
+    <form method="POST" action="newuser">
+    <input type="text" placeholder="Username" name="username" required>
+    <input type="text" placeholder="Email Address" name="email" required>
+    <input type="text" placeholder="Full Name" name="name" required>
+    <input type="password" placeholder="Password" name="password" required>
+    <input type="submit" class="button-primary" value="Register">
+    </form>
 <% else %>
-<h3> Login </h3>
-<form method="POST">
-<input type="text" placeholder="Username / Email" name="login" required>
-<input type="password" placeholder="Password" name="password" required>
-<input type="submit" value="Login">
-</form>
+    <h3> Login </h3>
+    <form method="POST">
+    <input type="text" placeholder="Username / Email" name="login" required>
+    <input type="password" placeholder="Password" name="password" required>
+    <input type="submit" class="button-primary" value="Login">
+    </form>
 <% end %>
 </div>

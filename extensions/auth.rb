@@ -35,7 +35,7 @@ module Extensions
             end
 
             app.get '/logout' do
-                # Deauth session in database
+                Database::Users.deauth_single(session[:token])
                 session[:token] = nil
                 redirect "/login"
             end
