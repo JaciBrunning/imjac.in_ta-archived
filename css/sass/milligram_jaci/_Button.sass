@@ -30,9 +30,9 @@ input[type='submit']
 
 	&:focus,
 	&:hover
-		background-color: #faf5ff !important
+		background-color: $color-secondary
 		border-color: $color-secondary
-		color: #606c76
+		color: $color-initial
 		outline: 0
 
 	&[disabled]
@@ -43,6 +43,11 @@ input[type='submit']
 		&:hover
 			background-color: $color-primary
 			border-color: $color-primary
+
+	&.button-primary
+		&:hover
+			background-color: transparent
+			color: $color-secondary
 
 	&.button-outline
 		background-color: transparent

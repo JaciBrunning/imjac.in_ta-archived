@@ -7,6 +7,8 @@ gem "thin", "1.7.2"
 
 # Database
 gem "sqlite3", "1.3.13"
+gem "sequel", "5.0.0"
+gem "bcrypt", "3.1.11"
 
 # Jekyll
 gem "jekyll", "3.5.2"

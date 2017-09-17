@@ -1,17 +1,32 @@
 require 'sinatra/base'
 require 'jobs'
 require 'utils'
+require 'libs'
 
 class ManagementModule < Sinatra::Base
-
-    Resources.resource_routes(self)
+    register Extensions::Resources
+    register Extensions::Auth
 
     get "/?" do
+        auth!
         @title = "Management Console"
         erb :index
     end
 
+    get "/login" do
+        redirect "/" if auth?
+        @title = "Management Console"
+        erb :login
+    end
+
+    post "/newuser" do
+        redirect "/login" unless Database::Users::User.count == 0
+        Database::Users::create params[:username], params[:email], params[:name], params[:password]
+        redirect "/login"
+    end
+
     get "/actions/git/update" do
+        auth!
         Management.update
         redirect "/"
     end

@@ -52,6 +52,13 @@ end
 
 require 'prestart'
 
+puts "Loading Extensions..."
+Dir['extensions/**.rb'].each do |p|
+    puts "Loading Helper #{p}..."
+    require_relative p
+end
+puts
+
 puts "Loading Libraries..."
 Dir['modules/**/library.rb'].each do |p|     # Preload files that can be used in other modules (e.g. setting up cross-module APIs)
     puts "Loading Library #{p}..."

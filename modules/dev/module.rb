@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'utils'
+require 'libs'
 require 'pathname'
 
 DEV_WWW_FOLDER = File.join(web_root(), '_public/dev')
@@ -7,8 +8,7 @@ FileUtils.mkdir_p DEV_WWW_FOLDER
 
 class Dev < Sinatra::Base
     set :public_folder, DEV_WWW_FOLDER
-
-    Resources.resource_routes(self)
+    register Extensions::Resources
 
     get "/ta/?" do
         redirect "/"

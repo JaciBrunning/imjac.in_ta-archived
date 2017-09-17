@@ -7,12 +7,11 @@ JEKYLL_BUILD_FOLDER = File.join(web_root(), '_build/html')
 
 class Main < Sinatra::Base
     set :public_folder, JEKYLL_BUILD_FOLDER
+    register Extensions::Resources
 
     get '/ta/?' do
         send_file File.join(settings.public_folder, 'ta/index.html')
     end
-
-    Resources.resource_routes(self)
 
     get '/' do
         redirect '/ta'
