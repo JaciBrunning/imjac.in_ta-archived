@@ -1,18 +1,19 @@
 require 'git'
+require 'libs'
 
 module Management
     @git = Git.open(web_root())
-    @status = nil
+    @gitstatus = nil
 
     def self.git
         @git
     end
 
-    def self.status
-        @status
+    def self.gitstatus
+        @gitstatus
     end
 
-    def self.update
+    def self.gitupdate
         puts "[MANAGEMENT] Updating git..."
         @git.fetch
         branch = @git.branch
@@ -28,16 +29,17 @@ module Management
                     :raw => commit,
                     :sha => commit.sha,
                     :msg => commit.message,
-                    :author => {
-                        :name => commit.author.name,
-                        :email => commit.author.email
-                    }
+                    :author => "#{commit.author.name} (#{commit.author.email})"
                 }
             }
         end
 
-        @status = status
+        @gitstatus = status
         puts "[MANAGEMENT] Git updated!"
     end
-    Jobs.submit Job.new(:gitupdate) { update }
+    Jobs.submit Job.new(:gitupdate) { gitupdate }
 end
+
+Libs.register_react :manage_git, "/js/react/git.jsx"
+Libs.register_react :manage_jobs, "/js/react/jobs.jsx"
+Libs.register_react :manage_builders, "/js/react/builders.jsx"

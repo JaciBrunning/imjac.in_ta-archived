@@ -1,41 +1,17 @@
 <h2> Management </h2>
 
+<script type="text/babel">
+ReactDOM.render(<Git />, document.getElementById("git"))
+ReactDOM.render(<Jobs />, document.getElementById("jobs"))
+ReactDOM.render(<Builders />, document.getElementById("builders"))
+</script>
+
 <div class="row">
     <div class="column">
         <h4> Git </h4>
-        
-        <% status = Management.status %>
-        <% if status.nil? %>
-            <h5> No Git data available yet! </h5>
-        <% else %>
-            <% local = status[:local] %>
-            <% remote = status[:remote] %>
 
-            <div class="row">
-                <div class="column">
-                    <b>Local</b> <br />
-                    <%= local[:commit][:sha][0...7] %> on <%= local[:branch] %><br />
-                    <%= local[:commit][:author][:name] %> (<%= local[:commit][:author][:email] %>)<br />
-                    <%= local[:commit][:msg] %> <br /> <br />
-                    <%= status[:changed] %> Tracked Changes <br />
-                    <%= status[:untracked] %> Untracked Changes
-                </div>
-                <div class="column">
-                    <b>Remote</b> <br />
-                    <%= remote[:commit][:sha][0...7] %> on <%= remote[:branch] %><br />
-                    <%= remote[:commit][:author][:name] %> (<%= remote[:commit][:author][:email] %>)<br />
-                    <%= remote[:commit][:msg] %>
-                </div>
-                <div class="column">
-                    <a class="button button-primary" href="/actions/git/update"> Update </a> <br />
-                    <a class="button button-primary" href="/actions/git/pull"> Pull from Origin </a> <br />
-                    <br />
-                    <a class="button button-outline" href="/actions/git/stage"> Stage </a> <br />
-                    <a class="button button-outline" href="/actions/git/confirm_commit"> Commit </a> <br />
-                    <a class="button button-outline" href="/actions/git/pull"> Push to Origin </a>
-                </div>
-            </div>
-        <% end %>
+        <div id="git"> </div> 
+        
     </div>
 </div>
 
@@ -43,38 +19,7 @@
     <div class="column">
         <h4> Jobs </h4>
 
-        <table>
-            <tr>
-                <th> Worker # </th>
-                <th> Job </th>
-            </tr>
-            <% Jobs.current_jobs.each_with_index do |job, idx| %>
-                <tr>
-                    <td> <%= idx %> </td>
-                    <td> <%= job.nil? ? "-" : job.name.to_s %> </td>
-                </tr>
-            <% end %>
-        </table>
-
-        <table>
-            <tr>
-                <th> Queued Job </th>
-                <th> Cancelled? </th>
-                <th> Recurring? </th>
-                <th> Time </th>
-                <th> Action </th>
-            </tr>
-            <% Jobs.jobs.each_with_index do |job, idx| %>
-                <% queuetime = Time.now - (job.submit_time + job.delay) %>
-                <tr>
-                    <td> <%= job.name.to_s %> </td>
-                    <td> <%= job.cancelled? ? "CANCELLED" : "-" %> </td>
-                    <td> <%= job.recurring? ? "Every #{Utils.render_time_delay(job.delay)}" : "-" %> </td>
-                    <td> <%= queuetime > 0 ? "Overdue(#{Utils.render_time_delay(queuetime)})" : "Delayed(#{Utils.render_time_delay(-queuetime)})" %> </td> 
-                    <td> <a href="/action/queue/donow/<%= idx %>" class="button"> Do Now </a> </td>
-                </tr>
-            <% end %>
-        </table>
+         <div id="jobs"> </div>
     </div>
 </div>
 
@@ -82,22 +27,6 @@
     <div class="column">
         <h4> Builders </h4>
 
-        <table>
-            <tr>
-                <th> Name </th>
-                <th> Type </th>
-                <th> Actions </th>
-            </tr>
-            <% get_all_builders.each do |sym, builder| %>
-                <tr>
-                    <td> <%= sym.to_s %> </td>
-                    <td> <%= builder.class.name %> </td>
-                    <td>
-                        <a class="button button-primary button-red" href="/actions/builder/<%= sym.to_s %>/clean"> Clean </a>
-                        <a class="button button-primary" href="/actions/builder/<%= sym.to_s %>/build"> Build </a>
-                    </td>
-                </tr>
-            <% end %>
-        </table>
+        <div id="builders"> </div>
     </div>
 </div>
