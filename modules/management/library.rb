@@ -39,5 +39,5 @@ module Management
         @status = status
         puts "[MANAGEMENT] Git updated!"
     end
-    Jobs.submit(:gitupdate) { update }
+    Jobs.submit Job.new(:gitupdate) { update }
 end

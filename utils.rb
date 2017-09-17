@@ -12,6 +12,17 @@ module Utils
         end
     end
 
+    def self.render_time_delay seconds
+        mm, ss = seconds.divmod(60)
+        hh, mm = mm.divmod(60)
+        strbuilder = []
+        strbuilder << "#{hh.round(0)}h" if hh > 0
+        strbuilder << "#{mm.round(0)}m" if mm > 0
+        strbuilder << "#{ss.round(0)}s"
+
+        strbuilder.join(" ")
+    end
+
     def self.strippath path
         path.sub('\\', '/').split('/').reject { |x| x == '..' }.join('/')
     end

@@ -60,17 +60,26 @@
         <table>
             <tr>
                 <th> Queued Job </th>
-                <th> Queued Job </th>
+                <th> Cancelled? </th>
+                <th> Recurring? </th>
+                <th> Time </th>
+                <th> Action </th>
             </tr>
-            <% Jobs.jobs.each_slice(2).each do |job1, job2| %>
+            <% Jobs.jobs.each_with_index do |job, idx| %>
+                <% queuetime = Time.now - (job.submit_time + job.delay) %>
                 <tr>
-                    <td> <%= job1.name.to_s %> </td>
-                    <td> <%= job2.nil? ? "-" : job2.name.to_s %> </td>
+                    <td> <%= job.name.to_s %> </td>
+                    <td> <%= job.cancelled? ? "CANCELLED" : "-" %> </td>
+                    <td> <%= job.recurring? ? "Every #{Utils.render_time_delay(job.delay)}" : "-" %> </td>
+                    <td> <%= queuetime > 0 ? "Overdue(#{Utils.render_time_delay(queuetime)})" : "Delayed(#{Utils.render_time_delay(-queuetime)})" %> </td> 
+                    <td> <a href="/action/queue/donow/<%= idx %>" class="button"> Do Now </a> </td>
                 </tr>
             <% end %>
         </table>
     </div>
+</div>
 
+<div class="row">
     <div class="column">
         <h4> Builders </h4>
 

@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'jobs'
+require 'utils'
 
 class ManagementModule < Sinatra::Base
 
@@ -52,13 +53,18 @@ class ManagementModule < Sinatra::Base
 
     get "/actions/builder/:builder/clean" do
         builder = params[:builder]
-        Jobs.submit("clean_#{builder}".to_sym) { get_all_builders[builder.to_sym].run_clean }
+        Jobs.submit Job.new("clean_#{builder}".to_sym) { get_all_builders[builder.to_sym].run_clean }
         redirect "/"
     end
 
     get "/actions/builder/:builder/build" do
         builder = params[:builder]
-        Jobs.submit("build_#{builder}".to_sym) { get_all_builders[builder.to_sym].run_build }
+        Jobs.submit Job.new("build_#{builder}".to_sym) { get_all_builders[builder.to_sym].run_build }
+        redirect "/"
+    end
+
+    get "/action/queue/donow/:jobidx" do
+        Jobs.jobs[params[:jobidx].to_i].immediate = true
         redirect "/"
     end
 
