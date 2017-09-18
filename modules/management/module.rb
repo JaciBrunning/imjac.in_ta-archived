@@ -34,6 +34,10 @@ class ManagementModule < Sinatra::Base
         erb :test
     end
 
+    get "/ta/?" do
+        redirect "/"
+    end
+
     get "/ws/git" do
         auth!
         redirect "/" if !request.websocket?
