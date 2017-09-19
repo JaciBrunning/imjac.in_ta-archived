@@ -30,3 +30,15 @@ class Builder
         self.class.run_clean
     end
 end
+
+class Builders
+    @builders = {}
+
+    def self.builders
+        @builders
+    end
+
+    def self.register name, builder
+        @builders[name] = builder
+    end
+end

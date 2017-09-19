@@ -46,4 +46,4 @@ end
 
 define_webcore_module :main, Main
 define_virtual_server /.*/, :main, priority: 100
-define_builder :jekyll, JekyllBuilder.new
+Builders.register :jekyll, JekyllBuilder.new

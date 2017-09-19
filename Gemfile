@@ -18,7 +18,7 @@ gem "kramdown", "1.15.0"
 gem "rouge", "1.11.1"
 
 # Management
-gem "git", "1.3.0"
+gem "rugged", "0.26.0"
 
 # Misc
 gem "json", "2.0.1"

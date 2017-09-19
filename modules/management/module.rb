@@ -17,6 +17,10 @@ class ManagementModule < Sinatra::Base
         erb :index
     end
 
+    get "/ta/?" do
+        redirect "/"
+    end
+
     get "/login" do
         redirect "/" if auth?
         @title = "Management Console"
@@ -27,15 +31,6 @@ class ManagementModule < Sinatra::Base
         redirect "/login" unless Database::Users::User.count == 0
         Database::Users::create params[:username], params[:email], params[:name], params[:password]
         redirect "/login"
-    end
-
-    get "/test" do
-        @js = [ :react ]
-        erb :test
-    end
-
-    get "/ta/?" do
-        redirect "/"
     end
 
     get "/ws/git" do
@@ -114,11 +109,11 @@ class ManagementModule < Sinatra::Base
                 data = JSON.parse msg
                 if data["action"] == "clean"
                     Jobs.submit Job.new("clean_#{data["builder"]}".to_sym) { 
-                        get_all_builders[data["builder"].to_sym].run_clean
+                        Builders.builders[data["builder"].to_sym].run_clean
                     }
                 elsif data["action"] == "build"
                     Jobs.submit Job.new("build_#{data["builder"]}".to_sym) { 
-                        get_all_builders[data["builder"].to_sym].run_build
+                        Builders.builders[data["builder"].to_sym].run_build
                     }
                 end
             end
@@ -127,65 +122,6 @@ class ManagementModule < Sinatra::Base
             end
         end
     end
-
-    # get "/actions/git/update" do
-    #     auth!
-    #     Management.update
-    #     redirect "/"
-    # end
-
-    # get "/actions/git/stage" do
-    #     Management.git.add(:all => true)    # TODO make a dialog for this
-    #     redirect "/"
-    # end
-
-    # get "/actions/git/confirm_commit" do
-    #     erb :confirm_commit
-    # end
-
-    # post "/actions/git/commit" do
-    #     puts params[:commit_message]        # TODO implement commit
-    #     Management.update
-    #     redirect "/"
-    # end
-
-    # get "/actions/git/confirm_reset" do
-    #     erb :confirm_reset
-    # end
-
-    # post "/actions/git/reset" do
-    #     # Management.git.reset_hard
-    #     redirect "/"
-    # end
-
-    # get "/actions/git/pull" do
-    #     Management.git.pull
-    #     Management.update
-    #     redirect "/"
-    # end
-
-    # get "/actions/git/push" do
-    #     Management.git.push
-    #     redirect "/"
-    # end
-
-    # get "/actions/builder/:builder/clean" do
-    #     builder = params[:builder]
-    #     Jobs.submit Job.new("clean_#{builder}".to_sym) { get_all_builders[builder.to_sym].run_clean }
-    #     redirect "/"
-    # end
-
-    # get "/actions/builder/:builder/build" do
-    #     builder = params[:builder]
-    #     Jobs.submit Job.new("build_#{builder}".to_sym) { get_all_builders[builder.to_sym].run_build }
-    #     redirect "/"
-    # end
-
-    # get "/action/queue/donow/:jobidx" do
-    #     Jobs.jobs[params[:jobidx].to_i].immediate = true
-    #     redirect "/"
-    # end
-
 end
 
 define_webcore_module :management, ManagementModule

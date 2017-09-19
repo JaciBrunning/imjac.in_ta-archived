@@ -23,8 +23,6 @@ end
 MODULES = {}
 SUBDOMAINS = []
 
-BUILDERS = {}
-
 module Kernel
     def define_webcore_module sym, clazz
         MODULES[sym] = clazz
@@ -35,14 +33,6 @@ module Kernel
         options = { priority: 50 }.merge(options)
         SUBDOMAINS << [domain_regex, module_sym, options]
         puts "Registering Subdomain(#{domain_regex.inspect}) -> Module(#{module_sym}) (#{options})..."
-    end
-
-    def define_builder sym, builder
-        BUILDERS[sym] = builder
-    end
-
-    def get_all_builders
-        BUILDERS
     end
 
     def web_root

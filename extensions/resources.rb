@@ -58,4 +58,4 @@ class CSSBuilder < Builder
     end
 end
 
-define_builder :css, CSSBuilder.new
+Builders.register :css, CSSBuilder.new
