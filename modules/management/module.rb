@@ -44,10 +44,20 @@ class ManagementModule < Sinatra::Base
             end
 
             ws.onmessage do |msg|
-                Jobs.submit Job.new(:gitupdate) { 
-                    Management.gitupdate
-                    ws.send JSON.generate(Management.gitstatus)
-                }
+                data = JSON.parse(msg)
+                if data["action"] == "update"
+                    Jobs.submit Job.new(:gitupdate) { 
+                        Management.gitupdate
+                        ws.send JSON.generate(Management.gitstatus)
+                    }
+                elsif data["action"] == "commit"
+                    msg = data["msg"]
+                    staged = data["staged"].map { |x| x["name"] }
+
+                    Jobs.submit Job.new(:gitcommit) { 
+                        Management.gitcommit @user, msg, staged
+                    }
+                end
             end
 
             ws.onclose do

@@ -16,25 +16,28 @@ module Management
     def self.gitupdate
         puts "[MANAGEMENT] Updating git..."
 
-        # @git.remotes['origin'].fetch.save    TODO: Prompt password for git things
+        changed_files = []
+        @git.status do |file, status|
+            unless status.include?(:ignored) || status.empty?
+                changed_files << { 
+                    name: file, 
+                    status: status.include?(:worktree_modified) ? "M" : 
+                        status.include?(:worktree_deleted) ? "D" : 
+                        "A" 
+                }
+            end
+        end
 
-        branchname = @git.head.name.sub(/^refs\/heads\//, '')
+        status = { branches: [], head: @git.head.name, changed_files: changed_files }
 
-        branch = @git.branches[branchname]
-        rbranch = @git.branches["origin/#{branchname}"]
-
-        # puts @git.diff.map { |f| f.path }
-
-        status = {  }
-
-        {:local => branch, :remote => rbranch}.each do |key, branch|
+        @git.branches.reject { |x| x.name.include?("HEAD") }.each do |branch|
             commit = branch.target
-            status[key] = {
-                :branch => branch.name,
+            status[:branches] << {
+                :branch => branch.canonical_name,
+                :name => branch.name,
                 :commit => {
-                    :raw => commit,
                     :sha => branch.target_id,
-                    :msg => commit.message,
+                    :message => commit.message,
                     :author => "#{commit.author[:name]} (#{commit.author[:email]})"
                 }
             }
@@ -42,6 +45,21 @@ module Management
 
         @gitstatus = status
         puts "[MANAGEMENT] Git updated!"
+    end
+
+    def self.gitcommit user, msg, files
+        index = @git.index
+        files.each { |x| index.add x }
+        tree = index.write_tree @git
+        ref = 'HEAD'
+        author = {:email=>"#{user.email}", :time=>Time.now, :name=>"#{user.username}"}
+        new_commit = Rugged::Commit.create(@git,
+            :author => author,
+            :message => msg,
+            :committer => author,
+            :parents => [@git.head.target],
+            :tree => tree,
+            :update_ref => ref)
     end
     Jobs.submit Job.new(:gitupdate) { gitupdate }
 end
