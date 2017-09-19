@@ -31,8 +31,12 @@ module Kernel
 
     def define_virtual_server domain_regex, module_sym, options={}
         options = { priority: 50 }.merge(options)
-        SUBDOMAINS << [domain_regex, module_sym, options]
-        puts "Registering Subdomain(#{domain_regex.inspect}) -> Module(#{module_sym}) (#{options})..."
+        if SUBDOMAINS.select { |x| x[0] == domain_regex }.size == 0
+            SUBDOMAINS << [domain_regex, module_sym, options] 
+            puts "Registering Subdomain(#{domain_regex.inspect}) -> Module(#{module_sym}) (#{options})..."
+        else
+            puts "Subdomain(#{domain_regex.inspect}) already registered!"
+        end
     end
 
     def web_root
@@ -41,27 +45,9 @@ module Kernel
 end
 
 require 'prestart'
+require 'loader'
 
-puts "Loading Extensions..."
-Dir['extensions/**.rb'].each do |p|
-    puts "Loading Helper #{p}..."
-    require_relative p
-end
-puts
-
-puts "Loading Libraries..."
-Dir['modules/**/library.rb'].each do |p|     # Preload files that can be used in other modules (e.g. setting up cross-module APIs)
-    puts "Loading Library #{p}..."
-    require_relative p
-end
-puts
-
-puts "Loading Modules..."
-Dir['modules/**/module.rb'].each do |p|
-    puts "Loading #{p}..."
-    require_relative p
-end
-puts
+Loader.load
 
 puts "Starting..."
 use SubdomainMiddleware, SUBDOMAINS.sort_by { |x| x[2][:priority] }, MODULES

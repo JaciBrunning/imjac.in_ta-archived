@@ -4,6 +4,8 @@ require 'jobs'
 require 'utils'
 require 'libs'
 require 'json'
+require 'builder'
+require 'loader'
 
 class ManagementModule < Sinatra::Base
     register Extensions::Resources
@@ -97,7 +99,7 @@ class ManagementModule < Sinatra::Base
         redirect "/" if !request.websocket?
         request.websocket do |ws|
             ws.onopen do
-                builders = get_all_builders.map do |name, builder|
+                builders = Builders.builders.map do |name, builder|
                     {
                         name: name, type: builder.class.name
                     }
