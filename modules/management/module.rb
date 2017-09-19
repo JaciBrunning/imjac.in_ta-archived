@@ -57,6 +57,14 @@ class ManagementModule < Sinatra::Base
                     Jobs.submit Job.new(:gitcommit) { 
                         Management.gitcommit @user, msg, staged
                     }
+                elsif data["action"] == "pull"
+                    Jobs.submit Job.new(:gitcommit) { 
+                        Management.gitpull
+                    }
+                elsif data["action"] == "push"
+                    Jobs.submit Job.new(:gitcommit) { 
+                        Management.gitpush
+                    }
                 end
             end
 

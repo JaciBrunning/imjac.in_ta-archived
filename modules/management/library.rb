@@ -63,6 +63,14 @@ module Management
             :tree => tree,
             :update_ref => ref)
     end
+
+    def self.gitpull
+        `git pull origin`
+    end
+
+    def self.gitpush
+        `git push origin`
+    end
     Jobs.submit Job.new(:gitupdate) { gitupdate }
 end
 

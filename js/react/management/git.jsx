@@ -120,8 +120,10 @@ class Git extends React.Component {
                     </div>
                     <div className="column">
                         <b> Actions </b><br />
+                        <a className="button button-primary" onClick={() => this.handleAction('pull')}> Pull </a> &nbsp;
                         <a className="button button-primary" onClick={() => this.handleAction('update')}> Update </a> <br />
-                        <a className="button button-outline" onClick={() => this.setState({ mode: "commit" }) }> Commit </a> <br />
+                        <a className="button button-outline" onClick={() => this.setState({ mode: "commit" }) }> Commit </a> &nbsp;
+                        <a className="button button-outline" onClick={() => this.handleAction('push')}> Push </a> <br />
                     </div>
                 </div>
         );
