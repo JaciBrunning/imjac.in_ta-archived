@@ -1,3 +1,4 @@
+require 'yaml'
 module Loader
     @libs = []
     @mods = []
@@ -15,11 +16,31 @@ module Loader
         @exts
     end
 
+    def self.discover
+        search_path = ['modules']
+        search_path += ENV['WEB_MOD_PATH'].split(':') unless ENV['WEB_MOD_PATH'].nil?
+        puts "[LOADER] Discovering..."
+        search_path.each do |path|
+            Dir[File.join(path, '**/module.yml')].each do |p|
+                puts "[LOADER] Discovered Module Config: #{p}"
+                prepare(File.dirname(p), parse_module_yml(File.read(p)))
+            end
+        end
+    end
+
+    def self.parse_module_yml contents
+        YAML.load contents
+    end
+
+    def self.prepare root, descriptor
+        @libs += descriptor["libraries"].map { |x| File.join(root, x) } if descriptor["libraries"]
+        @mods += descriptor["modules"].map { |x| File.join(root, x) }   if descriptor["modules"]
+    end
+
     def self.load_libs
         puts "[LOADER] Loading Libraries..."
-        Dir['modules/**/library.rb'].each do |p|     # Preload files that can be used in other modules (e.g. setting up cross-module APIs)
+        @libs.each do |p|     # Preload files that can be used in other modules (e.g. setting up cross-module APIs)
             puts "[LOADER] Loading lib #{p}..."
-            @libs << p
             require_relative p
         end
         puts
@@ -27,9 +48,8 @@ module Loader
 
     def self.load_mods
         puts "[LOADER] Loading Modules..."
-        Dir['modules/**/module.rb'].each do |p|
+        @mods.each do |p|
             puts "[LOADER] Loading mod #{p}..."
-            @mods << p
             require_relative p
         end
         puts

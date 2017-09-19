@@ -47,6 +47,7 @@ end
 require 'prestart'
 require 'loader'
 
+Loader.discover
 Loader.load
 
 puts "Starting..."
