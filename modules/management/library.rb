@@ -16,6 +16,8 @@ module Management
     def self.gitupdate
         puts "[MANAGEMENT] Updating git..."
 
+        @git.index.reload
+
         changed_files = []
         @git.status do |file, status|
             unless status.include?(:ignored) || status.empty?
