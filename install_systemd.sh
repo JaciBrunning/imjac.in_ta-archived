@@ -6,7 +6,7 @@ Description=imjac.in/ta webcore server
 [Service]
 WorkingDirectory=`pwd`
 ExecStartPre=/bin/sleep 1
-ExecStart=`/usr/share/rvm/bin/rvm gemdir`/wrappers/thin start -p 80
+ExecStart=/usr/bin/authbind --deep `/usr/share/rvm/bin/rvm gemdir`/wrappers/thin start -p 80
 Type=simple
 User=www
 Group=www
@@ -17,6 +17,13 @@ WantedBy=multi-user.target
 ")
 
 echo "$filecontents" > /etc/systemd/system/webcore.service
+
+apt-get install authbind
+touch /etc/authbind/byport/80
+touch /etc/authbind/byport/443
+chmod 777 /etc/authbind/byport/80
+chmod 777 /etc/authbind/byport/443
+
 systemctl daemon-reload
 systemctl restart webcore.service
 systemctl enable webcore.service
