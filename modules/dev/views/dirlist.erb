@@ -22,7 +22,7 @@
                         <td> </td>
                     </tr>
                 <% end %>
-                <% Pathname.new(@directory).children.each do |child| %>
+                <% Pathname.new(@directory).children.sort.each do |child| %>
                     <% dir, symlink = [File.directory?(child), File.symlink?(child)] %>
                     <tr>
                         <td> <a href="<%= File.basename(child) %><%= dir ? '/' : ''%>"> <i class="fa fa-<%= dir ? 'folder-open-o' : symlink ? 'long-arrow-right' :'file-o' %>" aria-hidden="true"></i> <%= File.basename(child) %> </a> </td>
