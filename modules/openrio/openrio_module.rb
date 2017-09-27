@@ -1,7 +1,7 @@
 require 'sinatra/base'
 
 class OpenRIOModule < Sinatra::Base
-    get "/gradlerio/recommended/"
+    get "/gradlerio/recommended/" do
         send_file "#{File.dirname(__FILE__)}/recommended_versions.json"
     end
 end
