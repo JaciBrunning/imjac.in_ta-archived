@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "OPRs and Least Squares Approximation"
+title: "OPRs and Least Squares Approximation, Geometrically"
 date: 2017-10-08 21:30:56
 categories: opr, stat, frc, linalg
 ---
