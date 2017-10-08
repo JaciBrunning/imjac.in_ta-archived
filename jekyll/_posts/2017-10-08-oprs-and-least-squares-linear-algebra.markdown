@@ -19,7 +19,11 @@ _Note: This post assumes basic familiarity with matricies and how they relate to
 ## OPRs and Overdetermined Systems
 When calculating OPR, we will have many different kinds of equations. As mentioned by Eugene in TBA's Blog post, we can represent OPRs with match outcomes in the following way,
 where $$[a, b, c, d]$$ are the OPRs of each alliance member.
-\\[ 1a+1b+0c+0d=10 \\\\ 1a+0b+1c+0d=13 \\\\ 0a+1b+1c+0d=07 \\\\ 1a+0b+0c+1d = 15 \\\\ 0a+1b+0c+1d = 10 \\]
+\\[ 1a+1b+0c+0d=10 \\] 
+\\[ 1a+0b+1c+0d=13 \\] 
+\\[ 0a+1b+1c+0d=07 \\]
+\\[ 1a+0b+0c+1d = 15 \\]
+\\[ 0a+1b+0c+1d = 10 \\]
 \\[ Ax = b \\]
 \\[ \begin{bmatrix} 1&1&0&0 \\\\ 1&0&1&0 \\\\ 0&1&1&0 \\\\ 1&0&0&1 \\\\ 0&1&0&1 \end{bmatrix} x = \begin{bmatrix} 10\\\\13\\\\07\\\\15\\\\10 \end{bmatrix}\\]
 (Here, Vector $$x$$ contains OPRs $$a$$ thru $$d$$)
