@@ -88,6 +88,26 @@ We can apply this pseudoinverse to our original data, using the following:
 This is identical to what we determined geometrically, and will provide the best fitting solution of $$x$$ values to minimize the error, giving the 'best guess' at what those values should be. In our case, this is
 what gives our OPR.
 
+### Efficiency and Cholesky Decomposition
+It should be noted that while the use of pseudoinverses is practical for smaller datasets (such as OPRs for a single event), it becomes very expensive in both time and storage to compute the pseudoinverse for much larger
+datasets. When speed and efficiency is a necessity for the larger datasets, it's common to instead use [Cholesky Decomposition](https://en.wikipedia.org/wiki/Cholesky_decomposition) in order to solve the normal equation $$ A^T A  x = A^T b $$.
+
+While most of this reading is left up to the reader, Cholesky Decomposition states that for some real, symmetric, positive-definite matrix, $$A = LL^T$$, where $$L$$ is a lower triangular matrix with real positive diagonals, as shown below:
+\\[ L = \begin{bmatrix} 1 & 0 & 0 \\\\ 4 & 6 & 0 \\\\ 5 & 6 & 1 \end{bmatrix} \\]
+
+Since $$A^T A$$ is a real, symmetric and positive-definite matrix, we can rewrite our normal equation like so:
+\\[ A^T A  x = A^T b \\]
+\\[ A^T A = L L^T \\]
+\\[ \therefore L L^T x = A^T b \\]
+\\[ L y = A^T b \\]
+\\[ L^T x = y \\]
+
+$$y$$ can be solved for through [forward-substitution](https://en.wikipedia.org/wiki/Triangular_matrix#Forward_and_back_substitution), since $$L$$ is known to be lower triangular. Likewise, $$x$$ can then be solved for through [back-substitution](https://en.wikipedia.org/wiki/Triangular_matrix#Forward_and_back_substitution), both of which are relatively inexpensive operations.
+
+Keep in mind that stability can be a concern for Cholesky Decomposition, but in the FRC OPR sense, it is generally adequate for use in larger datasets.
+
+Thanks to Ether for the help in this particular section of the post. 
+
 ## Final Notes
 The same logic behind pseudoinverses can be applied to other elements of scoring in FRC other than just OPRs. 
 Let's take a look at a 2D dataset, that is, $$(x_m, y_m)$$. This could be something like High Fuel Scored vs OPR, or whatever stat you want to measure.
