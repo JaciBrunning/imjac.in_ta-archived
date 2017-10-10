@@ -104,8 +104,6 @@ Since $$A^T A$$ is a real, symmetric and positive-definite matrix, we can rewrit
 
 $$y$$ can be solved for through [forward-substitution](https://en.wikipedia.org/wiki/Triangular_matrix#Forward_and_back_substitution), since $$L$$ is known to be lower triangular. Likewise, $$x$$ can then be solved for through [back-substitution](https://en.wikipedia.org/wiki/Triangular_matrix#Forward_and_back_substitution), both of which are relatively inexpensive operations.
 
-Keep in mind that stability can be a concern for Cholesky Decomposition, but in the FRC OPR sense, it is generally adequate for use in larger datasets.
-
 Thanks to Ether for the help in this particular section of the post. 
 
 ## Final Notes
