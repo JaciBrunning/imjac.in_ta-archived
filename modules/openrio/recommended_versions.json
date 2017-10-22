@@ -1,10 +1,14 @@
 {
     "2017": {
-        "wpilib": "2017.3.1",
+        "wpilib": "2017.2.1",
         "ntcore": "3.1.7",
-        "opencv": "3.2.0",
-        "cscore": "1.0.2",
+        "opencv": "3.1.0",
+        "cscore": "1.0.1",
+        "wpiutil": "1.0.2",
         "ctre": "4.4.1.14",
-        "navx": "3.0.323"
+        "navx": "3.0.323",
+        "smartdashboard": "2.0.4",
+        "javainstaller": "2.0.3",
+        "toolchain": "2017-4.9.3"
     }
 }
