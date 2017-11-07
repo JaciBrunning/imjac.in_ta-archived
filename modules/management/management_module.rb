@@ -12,7 +12,7 @@ class ManagementModule < Sinatra::Base
     register Extensions::Auth
 
     get "/?" do
-        auth!
+        auth_su!
         @title = "Management Console"
         @js = [ :react ]
         @react = [ :manage_git, :manage_jobs, :manage_builders ]
@@ -24,14 +24,13 @@ class ManagementModule < Sinatra::Base
     end
 
     get "/login" do
-        redirect "/" if auth?
         @title = "Management Console"
         erb :login
     end
 
     post "/newuser" do
-        redirect "/login" unless Database::Users::User.count == 0
-        Database::Users::create params[:username], params[:email], params[:name], params[:password]
+        redirect "/login" unless Database::Login::User.count == 0
+        Database::Login::create params[:username], params[:email], params[:name], params[:password], true
         redirect "/login"
     end
 

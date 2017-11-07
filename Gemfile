@@ -7,7 +7,7 @@ gem "thin", "1.7.2"
 gem "sinatra-websocket", "0.3.1"
 
 # Database
-gem "sqlite3", "1.3.13"
+gem "pg", "0.21.0"
 gem "sequel", "5.0.0"
 gem "bcrypt", "3.1.11"
 

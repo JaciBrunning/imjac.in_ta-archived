@@ -3,32 +3,34 @@ require 'db/security'
 require 'bcrypt'
 
 module Database
-    class Users
-        @db = Database.new_db :users
+    class Login
+        @db = Database::connect
+        SCHEMA = Sequel[:login]
 
         # Create Tables
-        @db.create_table? :user do
+        @db.create_table? SCHEMA[:user] do
             primary_key :id
-            String :username, null: false, unique: true, collate: :nocase
-            String :email, null: false, unique: true, collate: :nocase
+            String :username, null: false, unique: true
+            String :email, null: false, unique: true
             String :name, null: false
             String :pass_salt, null: false
             String :pass_hash, null: false
+            Boolean :superuser, default: false
         end
 
-        @db.create_table? :user_token do
+        @db.create_table? SCHEMA[:user_token] do
             primary_key :id
-            foreign_key :user_id, :user, on_delete: :cascade
+            foreign_key :user_id, SCHEMA[:user], on_delete: :cascade
             String :tok_string, null: false, unique: true
             Time :leased_time, null: false
             Time :expire_time, null: false
         end
 
         # Model Classes
-        class User < Sequel::Model(@db[:user])
+        class User < Sequel::Model(@db[SCHEMA[:user]])
         end
 
-        class UserToken < Sequel::Model(@db[:user_token])
+        class UserToken < Sequel::Model(@db[SCHEMA[:user_token]])
             many_to_one :user
         end
 
@@ -70,12 +72,12 @@ module Database
                 UserToken.where(tok_string: token).delete
             end
 
-            def create username, email, name, pass
+            def create username, email, name, pass, superuser=false
                 salt = Security::salt
                 hash = Security::hash pass, salt
 
                 begin
-                    User.create username: username, email: email, name: name, pass_salt: salt, pass_hash: hash
+                    User.create username: username, email: email, name: name, pass_salt: salt, pass_hash: hash, superuser: superuser
                 rescue => e
                     :exists
                 end

@@ -1,5 +1,5 @@
 <div class="container" style="max-width: 50em">
-<% if Database::Users::User.count == 0 %>
+<% if Database::Login::User.count == 0 %>
     <h3> Create Initial User </h3>
     <form method="POST" action="newuser">
     <input type="text" placeholder="Username" name="username" required>
