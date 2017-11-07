@@ -18,7 +18,7 @@ module Loader
 
     def self.discover
         search_path = ['modules']
-        search_path += ENV['WEB_MOD_PATH'].split(';') unless ENV['WEB_MOD_PATH'].nil?
+        search_path += ENV['WEBCORE_MOD_PATH'].split(';') unless ENV['WEBCORE_MOD_PATH'].nil?
         puts "[LOADER] Discovering..."
         search_path.each do |path|
             Dir[File.join(path.gsub("\\", "/"), '**/module.yml')].each do |p|
