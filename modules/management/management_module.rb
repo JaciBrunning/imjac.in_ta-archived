@@ -127,13 +127,9 @@ class ManagementModule < Sinatra::Base
             ws.onmessage do |msg|
                 data = JSON.parse msg
                 if data["action"] == "clean"
-                    Jobs.submit Job.new("clean_#{data["builder"]}".to_sym) { 
-                        Builders.builders[data["builder"].to_sym].run_clean
-                    }
+                    Builders.builders[data["builder"].to_sym].submit_clean!
                 elsif data["action"] == "build"
-                    Jobs.submit Job.new("build_#{data["builder"]}".to_sym) { 
-                        Builders.builders[data["builder"].to_sym].run_build
-                    }
+                    Builders.builders[data["builder"].to_sym].submit_build!
                 end
             end
 

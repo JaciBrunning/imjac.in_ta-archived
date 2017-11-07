@@ -1,33 +1,22 @@
+require 'jobs'
+
 class Builder
-
-    class << self
-        def build &block
-            @buildstages ||= []
-            @buildstages << block
-        end
-
-        def clean &block
-            @cleanstages ||= []
-            @cleanstages << block
-        end
-
-        def run_build
-            @buildstages ||= []
-            @buildstages.each { |stage| stage.call() }
-        end
-
-        def run_clean
-            @cleanstages ||= []
-            @cleanstages.each { |stage| stage.call() }
-        end
+    def _setname name
+        @name = name
     end
 
-    def run_build
-        self.class.run_build
+    def build
     end
 
-    def run_clean
-        self.class.run_clean
+    def clean
+    end
+
+    def submit_clean!
+        Jobs.submit Job.new("clean_#{@name.to_s}".to_sym) { clean }
+    end
+
+    def submit_build!
+        Jobs.submit Job.new("build_#{@name.to_s}".to_sym) { build }
     end
 end
 
@@ -39,6 +28,7 @@ class Builders
     end
 
     def self.register name, builder
+        builder._setname name
         @builders[name] = builder
     end
 end

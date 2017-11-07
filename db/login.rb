@@ -8,7 +8,7 @@ module Database
         SCHEMA = Sequel[:login]
 
         # Create Tables
-        @db.create_table? SCHEMA[:user] do
+        @db.create_table? SCHEMA[:users] do
             primary_key :id
             String :username, null: false, unique: true
             String :email, null: false, unique: true
@@ -18,19 +18,19 @@ module Database
             Boolean :superuser, default: false
         end
 
-        @db.create_table? SCHEMA[:user_token] do
+        @db.create_table? SCHEMA[:user_tokens] do
             primary_key :id
-            foreign_key :user_id, SCHEMA[:user], on_delete: :cascade
+            foreign_key :user_id, SCHEMA[:users], on_delete: :cascade
             String :tok_string, null: false, unique: true
             Time :leased_time, null: false
             Time :expire_time, null: false
         end
 
         # Model Classes
-        class User < Sequel::Model(@db[SCHEMA[:user]])
+        class User < Sequel::Model(@db[SCHEMA[:users]])
         end
 
-        class UserToken < Sequel::Model(@db[SCHEMA[:user_token]])
+        class UserToken < Sequel::Model(@db[SCHEMA[:user_tokens]])
             many_to_one :user
         end
 

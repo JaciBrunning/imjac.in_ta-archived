@@ -7,6 +7,10 @@ module Extensions
                 !@user.nil?
             end
 
+            def auth_su?
+                !@user.nil? && @user.superuser
+            end
+
             def auth!
                 redirect "/login" unless @user
             end

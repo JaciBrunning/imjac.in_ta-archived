@@ -35,11 +35,11 @@ class Main < Sinatra::Base
 end
 
 class JekyllBuilder < Builder
-    clean do
+    def clean
         FileUtils.rm_r JEKYLL_BUILD_FOLDER if File.exists?(JEKYLL_BUILD_FOLDER)
     end
 
-    build do
+    def build
         `jekyll build -s #{File.join(web_root(), 'jekyll')} -d #{JEKYLL_BUILD_FOLDER}/ta`
     end
 end

@@ -17,7 +17,7 @@ module Loader
     end
 
     def self.discover
-        search_path = ['modules']
+        search_path = ['modules', '../modules']
         search_path += ENV['WEBCORE_MOD_PATH'].split(';') unless ENV['WEBCORE_MOD_PATH'].nil?
         puts "[LOADER] Discovering..."
         search_path.each do |path|

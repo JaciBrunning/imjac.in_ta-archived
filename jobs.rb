@@ -83,6 +83,7 @@ class Jobs
                         sleep 1
                     rescue => e
                         puts "[JOB WORK ##{threadnum}] Error: #{e}"
+                        puts e.backtrace.map { |x| "[JOB WORK ##{threadnum}]!\t #{x}" }
                         sleep 1
                     end
                 end

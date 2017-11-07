@@ -47,15 +47,23 @@ module Extensions
 end
 
 class CSSBuilder < Builder
-    clean do
-        FileUtils.rm_r CSS_BUILD_FOLDER if File.exists?(CSS_BUILD_FOLDER)
+    def initialize cssfile, cssname, options={}    
+        options[:includes] ||= [ File.join(web_root(), 'css/sass') ]
+        @options = options
+        @cssfile = cssfile
+        @cssname = cssname
     end
 
-    build do
+    def clean
+        f = File.join(CSS_BUILD_FOLDER, @cssname)
+        File.delete(f) if File.exists?(f)
+    end
+
+    def build
         FileUtils.mkdir_p CSS_BUILD_FOLDER
-        `sass -I css/sass -I css/sass -t compressed -E 'UTF-8' #{File.join(web_root(), 'css/sass/milligram_jaci/milligram_jaci.sass')} #{File.join(CSS_BUILD_FOLDER, 'milligram_jaci.css')}` 
-        `sass -I css/sass -I css/sass -t compressed -E 'UTF-8' #{File.join(web_root(), 'css/sass/blog/blog.scss')} #{File.join(CSS_BUILD_FOLDER, 'blog.css')}`
+        `sass #{@options[:includes].map { |x| "-I #{x}" }.join(' ')} -t compressed -E 'UTF-8' #{@cssfile} #{File.join(CSS_BUILD_FOLDER, @cssname)}` 
     end
 end
 
-Builders.register :css, CSSBuilder.new
+Builders.register :css,         CSSBuilder.new(File.join(web_root(), 'css/sass/milligram_jaci/milligram_jaci.sass'), 'milligram_jaci.css')
+Builders.register :css_blog,    CSSBuilder.new(File.join(web_root(), 'css/sass/blog/blog.scss'), 'blog.css')
