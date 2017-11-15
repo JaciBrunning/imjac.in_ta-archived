@@ -11,18 +11,18 @@ module OpenRIO
             uuid :uuid, null: false
 
             DateTime :time
-            String :os
-            String :os_family
-            String :os_version
-            String :os_native
+            String :os, size: 50
+            String :os_family, size: 50
+            String :os_version, size: 50
+            String :os_native, size: 50
 
-            String :gradle
-            String :gradlerio
+            String :gradle, size: 20
+            String :gradlerio, size: 20
         end
 
         @db.create_table? SCHEMA[:telemetry_plugins] do
             primary_key :id
-            String :plugin, unique: true
+            String :plugin, unique: true, size: 100
         end
 
         @db.create_table? SCHEMA[:telemetry_report_plugins] do
@@ -33,8 +33,8 @@ module OpenRIO
 
         @db.create_table? SCHEMA[:telemetry_deps] do
             primary_key :id
-            String :group, null: true
-            String :name
+            String :group, null: true, size: 100
+            String :name, size: 50
             unique [:group, :name]
         end
 
@@ -42,25 +42,25 @@ module OpenRIO
             primary_key :id
             foreign_key :report_id, SCHEMA[:telemetry_reports], on_delete: :cascade
             foreign_key :dep_id, SCHEMA[:telemetry_deps], on_delete: :cascade
-            String :config
-            String :version, null: true
+            String :config, size: 50
+            String :version, null: true, size: 50
         end
 
         @db.create_table? SCHEMA[:telemetry_wpi] do
             primary_key :id
-            String :name, unique: true
+            String :name, unique: true, size: 50
         end
 
         @db.create_table? SCHEMA[:telemetry_report_wpi] do
             foreign_key :report_id, SCHEMA[:telemetry_reports], on_delete: :cascade
             foreign_key :wpi_id, SCHEMA[:telemetry_wpi], on_delete: :cascade
-            String :version
+            String :version, size: 50
             primary_key [:report_id, :wpi_id]
         end
 
         @db.create_table? SCHEMA[:telemetry_teams] do
             foreign_key :report_id, SCHEMA[:telemetry_reports], on_delete: :cascade
-            String :team
+            String :team, size: 16
             primary_key [:report_id, :team]
         end
 
