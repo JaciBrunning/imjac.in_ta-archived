@@ -2,9 +2,11 @@
 filecontents=$(echo "
 [Unit]
 Description=imjac.in/ta webcore server
+After=postgresql.service
 
 [Service]
 WorkingDirectory=`pwd`
+Environment=WEBCORE_DB_URL='postgres://web:web@localhost/web'
 ExecStartPre=/bin/sleep 1
 ExecStart=/usr/bin/authbind --deep `/usr/share/rvm/bin/rvm gemdir`/wrappers/thin start -p 80
 Type=simple
