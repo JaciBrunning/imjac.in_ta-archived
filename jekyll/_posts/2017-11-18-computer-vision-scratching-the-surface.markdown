@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Computer Vision - Scratching the Surface"
-date: 2018-11-18 11:30:00
+date: 2017-11-18 11:30:00
 categories: cv, vision, talk, frc
 ---
 
@@ -17,6 +17,7 @@ Access the [VOD Recording Here](https://www.youtube.com/watch?v=d9WSAfzA6fc).
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/d9WSAfzA6fc" frameborder="0" allowfullscreen></iframe>
 
+<br />
 
 ## Questions
 These were questions asked during the presentation.
@@ -28,6 +29,7 @@ A) Yes, but it is very difficult. The first obstacle is identifying the object. 
 If you do manage to track the object, you still have to deal with the uncertainty that comes with the camera, object and environment. For some objects, air resistance can make the trajectory not quite parabolic, or unpredictable (in the case of things like paper airplanes). There is always some uncertainty, which is why it's important to keep updating your estimated path while the object is in view. This is pretty well demonstrated in Mark Rober's video of an automatic dartboard, shown below _[(link)](https://www.youtube.com/watch?v=MHTizZ_XcUM)_
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/MHTizZ_XcUM" frameborder="0" allowfullscreen></iframe>
+<br />
 
 ### _Q) What's the difference between using a phone and another coprocessor like the Raspberry Pi?_
 
@@ -44,6 +46,7 @@ All this being said, there's nothing inherently wrong with using an SBC (single 
 A) Yes! Stereo cameras is a form of sensor fusion, and can be used to sense depth in the same way that your eyes do. Two perspectives of the same image can be used, with some known parameters, to create a depth map of the image, allowing you to tell the distance as well as size and angle of features in the image. This can be very useful for some specific cases.
 
 Multiple cameras (not necessarily stereoscopic) can also be used to aid in a variety of scenarios. A common configuration is one on the back, and one on the front. Another configuration is one, high resolution camera for processing (computer vision), and another, lower resolution one being sent raw to the driver to aid them. This lower-res camera helps in staying under the bandwidth limit, but the higher-res camera is only used onboard, helping in automated tasks.
+<br />
 
 ## Further Reading
 If you want to dig deeper into automated tasks, such as those used in self-driving vehicles or autonomous robots, I would suggest investing some time into researching sensor fusion, the process of combining sensors (of the same or different types) in order to provide better results (less uncertain, more accurate, more reliable, higher performance) than any one sensor used on its own. From this research, you'll also gain a bit of insight into 'state', which is a key concept in automation and robotics.
