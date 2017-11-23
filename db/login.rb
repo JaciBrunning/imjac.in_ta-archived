@@ -16,6 +16,9 @@ module Database
             String :pass_salt, null: false
             String :pass_hash, null: false
             Boolean :superuser, default: false
+
+            index Sequel.function(:lower, :username), :unique => true
+            index Sequel.function(:lower, :email), :unique => true
         end
 
         @db.create_table? SCHEMA[:user_tokens] do
@@ -40,7 +43,7 @@ module Database
             end
 
             def login_password login, pass
-                user = User.where(username: login).or(email: login)
+                user = User.where(Sequel.ilike(:username, login)).or(Sequel.ilike(:email, login))
                 return :nouser if user.nil? || user.empty?
                 user = user.first
                 if (user.pass_hash == Security::hash(pass, user.pass_salt))
