@@ -1,8 +1,8 @@
 source "https://rubygems.org"
 
 # Server
-gem "rack", "1.6.4"
-gem "sinatra", "1.3.0"
+gem "rack", "2.0.1"
+gem "sinatra", "2.0.0"
 gem "thin", "1.7.2"
 gem "sinatra-websocket", "0.3.1"
 
