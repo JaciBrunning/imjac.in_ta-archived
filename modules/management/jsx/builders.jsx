@@ -26,7 +26,7 @@ class Builders extends React.Component {
                     <th> Type </th>
                     <th> Actions </th>
                 </tr>
-                { this.state.status.builders.map((builder) =>
+                { [].concat(this.state.status.builders).sort((a, b) => a.name.localeCompare(b.name) ).map((builder) =>
                     <tr>
                         <td> { builder.name } </td>
                         <td> { builder.type } </td>

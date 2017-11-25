@@ -28,5 +28,4 @@ module Libs
 end
 
 Libs.register_css :fontawesome, "https://use.fontawesome.com/b730a09ebb.css"
-
 Libs.register_js :react, "https://unpkg.com/react@15/dist/react.min.js", "https://unpkg.com/react-dom@15/dist/react-dom.min.js"
