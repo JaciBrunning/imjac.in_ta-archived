@@ -33,7 +33,7 @@ class Job
 end
 
 class Jobs
-    WORKER_COUNT = 2
+    WORKER_COUNT = 4
     @jobs = []
     @jobs_mtx = Mutex.new
     @curr_jobs = []
