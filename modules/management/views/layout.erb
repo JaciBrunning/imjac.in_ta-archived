@@ -4,16 +4,13 @@
     <meta charset="UTF-8">
     <title><%= @title %></title>
     <%= Libs.css :jaci, :fontawesome %>
+    <%= Libs.js :react, :management %>
     <% unless @css.nil? %>
         <%= @css.map { |x| Libs.css x }.join("\n") %>
     <% end %>
 
     <% unless @js.nil? %>
         <%= @js.map { |x| Libs.js x }.join("\n") %>
-    <% end %>
-
-    <% unless @react.nil? %>
-        <%= @react.map { |x| Libs.react x }.join("\n") %>
     <% end %>
 </head>
 <body>

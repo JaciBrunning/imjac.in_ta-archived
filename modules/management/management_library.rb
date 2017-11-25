@@ -73,7 +73,3 @@ module Management
     end
     Jobs.submit Job.new(:gitupdate) { gitupdate }
 end
-
-Libs.register_react :manage_git, "/js/react/management/git.jsx"
-Libs.register_react :manage_jobs, "/js/react/management/jobs.jsx"
-Libs.register_react :manage_builders, "/js/react/management/builders.jsx"
