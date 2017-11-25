@@ -65,19 +65,22 @@ class JSBuilder < Builder
         @react = options[:react]
         @outdir = File.join(JS_BUILD_FOLDER, options[:out])
 
-        @files = (Dir["#{@jsdir}/**/*.jsx"] + Dir["#{@jsdir}/**/*.js"])
+        _dirbase = "#{@jsdir}/**"
+        _exts = ['jsx', 'js', 'es6', 'ts']
+        @files = _exts.map { |x| Dir["#{_dirbase}/*.#{x}"] }.inject(:+)
         @outfiles = @files.map do |jsfile|
             relative = Pathname.new(jsfile).relative_path_from(Pathname.new(@jsdir)).to_s
             outfile = File.join(@outdir, relative)
             outfile = "#{File.dirname(outfile)}/#{File.basename(outfile, '.*')}.js"
-            outfile
+            relative = File.dirname(relative) == '.' ? File.basename(relative, '.*') : (File.dirname(relative) + "/" + File.basename(relative, '.*'))
+            [relative, outfile]
         end
 
         unless options[:lib].nil?
             @outfiles.each do |outfile|
                 # Assumes proc if not symbol
-                name = options[:lib].is_a?(Symbol) ? options[:lib] : options[:lib].call(outfile)
-                Libs.register_js name, "/res/#{Pathname.new(outfile).relative_path_from(Pathname.new(RES_BUILD_FOLDER)).to_s}"
+                name = options[:lib].is_a?(Symbol) ? options[:lib] : options[:lib].call(outfile.first)
+                Libs.register_js name, "/res/#{Pathname.new(outfile.last).relative_path_from(Pathname.new(RES_BUILD_FOLDER)).to_s}"
             end
         end
     end
@@ -88,7 +91,7 @@ class JSBuilder < Builder
 
     def build
         @files.each_with_index do |jsfile, i|
-            outfile = @outfiles[i]
+            outfile = @outfiles[i].last
             FileUtils.mkdir_p File.dirname(outfile)
             File.write(outfile, Babel::Transpiler.transform(File.read(jsfile))['code'])
         end

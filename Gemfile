@@ -23,3 +23,4 @@ gem "rugged", "0.26.0"
 # Misc
 gem "json", "2.0.4"
 gem "babel-transpiler", "0.7.0"
+gem "wisper", "2.0.0"
