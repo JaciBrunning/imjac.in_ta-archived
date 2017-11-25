@@ -140,5 +140,9 @@ end
 define_webcore_module :management, ManagementModule
 define_virtual_server /manage.*/, :management
 
-Builders.register :management_jsx, JSBuilder.new(File.join(File.dirname(__FILE__), 'jsx'), 'react/management')
-Libs.register_js  :management, '/res/js/react/management/builders.js', '/res/js/react/management/git.js', '/res/js/react/management/jobs.js', '/res/js/react/management/index.js'
+_builder = JSBuilder.new(
+    File.join(File.dirname(__FILE__), 'jsx'),
+    out: 'react/management',
+    lib: :management
+)
+Builders.register :management_jsx, _builder

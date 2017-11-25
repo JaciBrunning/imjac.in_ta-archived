@@ -3,11 +3,19 @@ module Libs
     @csslibs = {}
 
     def self.register_js name, *uris
-        @jslibs[name] = uris
+        if @jslibs[name].nil?
+            @jslibs[name] = uris
+        else
+            @jslibs[name] += uris
+        end
     end
 
     def self.register_css name, *uris
-        @csslibs[name] = uris
+        if @csslibs[name].nil?
+            @csslibs[name] = uris
+        else
+            @csslibs[name] += uris
+        end
     end
 
     def self.js *names
@@ -19,7 +27,6 @@ module Libs
     end
 end
 
-Libs.register_css :jaci, "/res/css/milligram_jaci.css"
 Libs.register_css :fontawesome, "https://use.fontawesome.com/b730a09ebb.css"
 
 Libs.register_js :react, "https://unpkg.com/react@15/dist/react.min.js", "https://unpkg.com/react-dom@15/dist/react-dom.min.js"
