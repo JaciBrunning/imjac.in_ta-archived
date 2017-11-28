@@ -42,8 +42,12 @@ module Database
                 @db
             end
 
+            def user login
+                User.where(Sequel.ilike(:username, login)).or(Sequel.ilike(:email, login))
+            end
+
             def login_password login, pass
-                user = User.where(Sequel.ilike(:username, login)).or(Sequel.ilike(:email, login))
+                user = user(login)
                 return :nouser if user.nil? || user.empty?
                 user = user.first
                 if (user.pass_hash == Security::hash(pass, user.pass_salt))
