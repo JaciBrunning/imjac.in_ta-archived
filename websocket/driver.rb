@@ -14,6 +14,7 @@ module Websocket
             @driver = driver
             @types = []
             @data  = {}
+            @onConnTmp = []
 
             @ws.onopen { on_open }
             @ws.onmessage { |msg| on_msg msg }
@@ -22,6 +23,8 @@ module Websocket
 
         def on_open
             @connected = true
+            @onConnTmp.each { |x| x.call() }
+            @onConnTmp.clear
         end
 
         def on_msg msg
@@ -39,7 +42,12 @@ module Websocket
         end
 
         def send type, action, data
-            @ws.send JSON.generate( { type: type, action: action, data: data } )
+            pr = Proc.new { @ws.send JSON.generate( { type: type, action: action, data: data } ) }
+            if connected?
+                pr.call()
+            else
+                @onConnTmp << pr
+            end
         end
 
         def connected?

@@ -39,7 +39,13 @@ module Extensions
                 token = Database::Login.login_password(login, password)
                 redirect "/login?error=#{token}" if token.is_a?(Symbol)
                 session[:token] = token.tok_string
-                redirect "/"
+                if session[:refer]
+                    url = session[:refer]
+                    session.delete :refer
+                    redirect url
+                else
+                    redirect "/"
+                end
             end
 
             app.get '/logout' do
