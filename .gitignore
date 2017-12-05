@@ -3,3 +3,4 @@ _public/
 _db/
 .sass-cache
 Gemfile.lock
+.vs/
