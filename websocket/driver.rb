@@ -95,7 +95,7 @@ module Websocket
 
         # To be called by websocket
         def on_msg type, action, data, socket
-            @listeners[type].each { |l| l.call(type, action, data, socket) }
+            @listeners[type]&.each { |l| l.call(type, action, data, socket) }
         end
     end
 end
