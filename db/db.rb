@@ -8,11 +8,7 @@ module Database
 
     def self.wrap_validation error_callback, &block
         begin
-            obj = yield
-            unless obj.valid?
-                error_callback.call(obj.errors.full_messages.map(&:capitalize))
-                return false
-            end
+            yield
             true
         rescue Sequel::UniqueConstraintViolation
             error_callback.call(['Key already exists in database'])
@@ -24,8 +20,9 @@ module Database
             error_callback.call(e.errors.full_messages.map(&:capitalize))
             return
         rescue => e
-            puts e.type
             error_callback.call(['An Unknown Error Occured'])
+            puts "[VAL] Validation Error (unknown): #{e}"
+            puts e.backtrace.map { |x| "[VAL]!\t #{x}" }
             false
         end
     end
