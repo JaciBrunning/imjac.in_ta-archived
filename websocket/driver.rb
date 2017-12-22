@@ -95,7 +95,14 @@ module Websocket
 
         # To be called by websocket
         def on_msg type, action, data, socket
-            @listeners[type]&.each { |l| l.call(type, action, data, socket) }
+            @listeners[type]&.each do |l|
+                begin
+                    l.call(type, action, data, socket)
+                rescue => e
+                    puts "[WSOCK] Websocket Listener Threw Exception: #{e}"
+                    puts e.backtrace.map { |x| "[WSOCK]!\t #{x}" }
+                end
+            end
         end
     end
 end

@@ -31,6 +31,14 @@ module Database
 
         # Model Classes
         class User < Sequel::Model(@db[SCHEMA[:users]])
+            def validate
+                super
+                errors.add(:username, 'is not valid (A-Z,0-9,_ only)') unless username =~ /^[A-Za-z0-9_]+$/
+                errors.add(:username, 'is too long') if username.size > 32
+                errors.add(:email, 'is not a valid email address') unless email =~ /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+                errors.add(:email, 'is too long') if email.size > 90
+                errors.add(:name, 'is too long') if name.size > 90
+            end
         end
 
         class UserToken < Sequel::Model(@db[SCHEMA[:user_tokens]])
@@ -83,11 +91,7 @@ module Database
                 salt = Security::salt
                 hash = Security::hash pass, salt
 
-                begin
-                    User.create username: username, email: email, name: name, pass_salt: salt, pass_hash: hash, superuser: superuser
-                rescue => e
-                    :exists
-                end
+                User.create username: username, email: email, name: name, pass_salt: salt, pass_hash: hash, superuser: superuser
             end
         end
     end
