@@ -11,12 +11,16 @@ module Extensions
                 !@user.nil? && @user.superuser
             end
 
-            def auth!
+            def auth! refer=nil
+                session[:refer] = refer unless refer.nil?
                 redirect "/login" unless @user
+                session[:refer] = nil unless refer.nil?
             end
 
-            def auth_su!
+            def auth_su! refer=nil
+                session[:refer] = refer unless refer.nil?
                 redirect "/login" unless @user && @user.superuser
+                session[:refer] = nil unless refer.nil?
             end
         end
 

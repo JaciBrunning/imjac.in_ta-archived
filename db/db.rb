@@ -25,9 +25,9 @@ module Database
         rescue MiscError => e
             error_callback.call([e.message])
         rescue => e
-            error_callback.call(['An Unknown Error Occured'])
             puts "[VAL] Validation Error (unknown): #{e}"
             puts e.backtrace.map { |x| "[VAL]!\t #{x}" }
+            error_callback.call(['An Unknown Error Occured'])
             false
         end
     end
