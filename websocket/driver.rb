@@ -28,11 +28,16 @@ module Websocket
         end
 
         def on_msg msg
-            json = JSON.parse(msg)
-            if json['type'] == 'types' && json['action'] == 'identify'
-                @types << json['data'].to_sym
-            else
-                @driver.on_msg(json['type'].to_sym, json['action'].to_sym, json['data'], self)
+            begin
+                json = JSON.parse(msg)
+                if json['type'] == 'types' && json['action'] == 'identify'
+                    @types << json['data'].to_sym
+                else
+                    @driver.on_msg(json['type'].to_sym, json['action'].to_sym, json['data'], self)
+                end
+            rescue => e
+                puts "[WSOCK] Websocket Listener Threw Exception: #{e}"
+                puts e.backtrace.map { |x| "[WSOCK]!\t #{x}" }
             end
         end
 
