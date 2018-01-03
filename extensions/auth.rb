@@ -14,13 +14,13 @@ module Extensions
             def auth! refer=nil
                 session[:refer] = refer unless refer.nil?
                 redirect "/login" unless @user
-                session[:refer] = nil unless refer.nil?
+                session.delete :refer unless refer.nil?
             end
 
             def auth_su! refer=nil
                 session[:refer] = refer unless refer.nil?
                 redirect "/login" unless @user && @user.superuser
-                session[:refer] = nil unless refer.nil?
+                session.delete :refer unless refer.nil?
             end
         end
 
