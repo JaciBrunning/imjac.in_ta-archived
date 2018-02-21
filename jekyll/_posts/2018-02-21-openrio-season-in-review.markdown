@@ -13,7 +13,7 @@ categories: openrio, frc
 OpenRIO takes your data seriously. We don't sell it, we don't make it public.   
 
 Want to disable it? Want proof? See our privacy policy here:  
-https://github.com/Open-RIO/GradleRIO/blob/master/PRIVACY.md
+[https://github.com/Open-RIO/GradleRIO/blob/master/PRIVACY.md](https://github.com/Open-RIO/GradleRIO/blob/master/PRIVACY.md)
 
 Data is only collected if you haven't disabled telemetry (above), and if you have an internet connection. **If you're connected to a robot, the report is not recorded, and so those numbers don't count towards the totals in this post**.
 
