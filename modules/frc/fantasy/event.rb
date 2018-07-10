@@ -28,7 +28,8 @@ class FRCLiveEvent
         @apikey = ENV['TBA_API_KEY'] || DEFAULT_API_KEY
         update_event
 
-        @job = Job.new("Update Fantasy FIRST Data", 30, true) {
+        # Once per minute
+        @job = Job.new("Update Fantasy FIRST Data", 60, true) {
             update
         }
         @job.run

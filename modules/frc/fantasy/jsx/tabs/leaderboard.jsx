@@ -28,36 +28,50 @@ class LeaderboardView extends React.Component {
         })
     }
 
+    csvData() {
+        return this.mapTeams()
+                .sort((a,b) => b.total-a.total)
+                .map((entry) => {
+                    return [entry.team.team, entry.total]
+                })
+    }
+
     render() {
         return (
-            <table className="picks">
-                <thead>
-                    <tr>
-                        <th> Team </th>
-                        <th> Points </th>
-                        <th> Highest Points Earner </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        this.mapTeams()
-                            .sort((a,b) => b.total-a.total)
-                            .map((entry) => {
-                                return <tr className={ entry.team.spent > 100 ? "red" : "" } >
-                                    <td> { entry.team.team +
-                                        (entry.team.spent > 100 ? " (OVER BUDGET) [DQ]" : "")
-                                    } </td>
-                                    <td> { entry.total } </td>
-                                    <td> {
-                                        (entry.highest_earner == undefined ? "-" : (
-                                            "Team " + entry.highest_earner.team + " (" + entry.highest_earner.pts.total + ")"
-                                        ))
-                                    } </td>
+            <div style={{width: "100%"}}>
+                <div className="row">
+                    <div className="column">
+                        <table className="picks">
+                            <thead>
+                                <tr>
+                                    <th> Team </th>
+                                    <th> Points </th>
+                                    <th> Highest Points Earner </th>
                                 </tr>
-                            })
-                    }
-                </tbody>
-            </table>
+                            </thead>
+                            <tbody>
+                                {
+                                    this.mapTeams()
+                                        .sort((a,b) => b.total-a.total)
+                                        .map((entry) => {
+                                            return <tr className={ entry.team.spent > 100 ? "red" : "" } >
+                                                <td> { entry.team.team +
+                                                    (entry.team.spent > 100 ? " (OVER BUDGET) [DQ]" : "")
+                                                } </td>
+                                                <td> { entry.total } </td>
+                                                <td> {
+                                                    (entry.highest_earner == undefined ? "-" : (
+                                                        "Team " + entry.highest_earner.team + " (" + entry.highest_earner.pts.total + ")"
+                                                    ))
+                                                } </td>
+                                            </tr>
+                                        })
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         )
     }
 }

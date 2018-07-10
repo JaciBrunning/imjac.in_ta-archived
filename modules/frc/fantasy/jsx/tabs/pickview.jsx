@@ -11,6 +11,7 @@ class PicksView extends React.Component {
                 <thead>
                     <tr>
                         <th> Team </th>
+                        <th> Budget </th>
                         <th> Picks </th>
                     </tr>
                 </thead>
@@ -18,7 +19,8 @@ class PicksView extends React.Component {
                     {
                         this.state.picks.map((team) => {
                             return <tr className={ team.spent > 100 ? "red" : "" }>
-                                <td> { team.team + " (" + team.spent + "₪)" } </td>
+                                <td> { team.team } </td>
+                                <td> { team.spent } ₪</td>
                                 <td> { 
                                     team.picks.map((pick) => { 
                                         return pick.team 

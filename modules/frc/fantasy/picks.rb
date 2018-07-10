@@ -9,7 +9,8 @@ class FFPicks
 
     def initialize
         @ff_entries = "[]"
-        @job = Job.new("Update Fantasy FIRST Picks", 300, true) {
+        # Every half an hour
+        @job = Job.new("Update Fantasy FIRST Picks", 1800, true) {
             content = open(FF_FETCH).read.force_encoding("utf-8")
             csv = CSV.parse(content)
             rows = csv[1..-1]

@@ -12,8 +12,11 @@ class Selector extends React.Component {
                         {
                             this.props.options.map((option) => {
                                 return <a className={
-                                    ("button " + (option == this.state.selected ? "button-clear" : "button-outline"))
-                                } onClick={ (e) => { this.setState({selected: option}) } }> { option.name } </a>
+                                    ("button " + (option == this.state.selected ? "button-clear button-selected" : "button-outline"))
+                                } onClick={ (e) => { this.setState({selected: option}) } }>
+                                    <i className={"fas fa-" + option.fa }> </i> &nbsp; 
+                                    { option.name }
+                                </a>
                             })
                         }
                     </div>
@@ -31,8 +34,8 @@ class Selector extends React.Component {
 function renderDefaultSelector(id) {
     ReactDOM.render(<Selector
         options={[
-            { name: "Leaderboard", entry: <LeaderboardView /> },
-            { name: "Picks", entry: <PicksView /> },
-            { name: "Points", entry: <PointsView /> }
+            { fa: "trophy", name: "Leaderboard", entry: <LeaderboardView /> },
+            { fa: "users", name: "Teams", entry: <PicksView /> },
+            { fa: "gamepad", name: "Robots", entry: <PointsView /> }
         ]} />, document.getElementById(id))
 }
