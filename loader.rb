@@ -33,8 +33,12 @@ module Loader
     end
 
     def self.prepare root, descriptor
-        @libs += descriptor["libraries"].map { |x| File.join(root, x) } if descriptor["libraries"]
-        @mods += descriptor["modules"].map { |x| File.join(root, x) }   if descriptor["modules"]
+        unless !descriptor["disabled"].nil? && descriptor["disabled"]
+            @libs += descriptor["libraries"].map { |x| File.join(root, x) } if descriptor["libraries"]
+            @mods += descriptor["modules"].map { |x| File.join(root, x) }   if descriptor["modules"]
+        else
+            puts "Module Skipped [disabled]"
+        end
     end
 
     def self.load_libs

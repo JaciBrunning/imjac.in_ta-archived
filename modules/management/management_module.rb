@@ -86,21 +86,21 @@ class ManagementModule < Sinatra::Base
                             cancelled: job.cancelled?,
                             recurring: job.recurring? ? "Every #{Utils.render_time_delay(job.delay)}" : "-",
                             time: job.immediate ? "ASAP" : qt > 0 ? "Overdue(#{Utils.render_time_delay(qt)})" : "Delayed(#{Utils.render_time_delay(-qt)})",
-                            hash: job.hash
+                            hash: job.hash.to_s
                         }
                     end
                     workers = Jobs.current_jobs.each_with_index.map do |job, idx|
                         {
                             id: idx, 
                             job: job.nil? ? "-" : job.name,
-                            hash: job.hash
+                            hash: job.hash.to_s
                         }
                     end
                     ws.send JSON.generate({ workers: workers, queued: qd })
                 else
                     data = JSON.parse msg
-                    Jobs.jobs.select { |x| x.hash == data["job"] }.first.cancel if data["action"] == "cancel"
-                    Jobs.jobs.select { |x| x.hash == data["job"] }.first.immediate = true if data["action"] == "immediate"
+                    Jobs.jobs.select { |x| x.hash.to_s == data["job"] }.first.cancel if data["action"] == "cancel"
+                    Jobs.jobs.select { |x| x.hash.to_s == data["job"] }.first.immediate = true if data["action"] == "immediate"
                 end
             end
 

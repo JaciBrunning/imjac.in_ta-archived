@@ -13,6 +13,7 @@ class Job
         @name = name
         @delay = delay
         @recurring = recurring
+        @immediate = false
     end
 
     def cancel
@@ -29,6 +30,10 @@ class Job
 
     def run
         @action.call() unless @cancelled
+    end
+
+    def hash
+        name.hash
     end
 end
 
