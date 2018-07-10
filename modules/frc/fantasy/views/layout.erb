@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><%= @title %></title>
+    <%= Libs.css :jaci, :fontawesome %>
+    <% unless @css.nil? %>
+        <%= @css.map { |x| Libs.css x }.join("\n") %>
+    <% end %>
+
+    <% unless @js.nil? %>
+        <%= @js.map { |x| Libs.js x }.join("\n") %>
+    <% end %>
+</head>
+<body>
+    <main class="wrapper">
+        <section class="container body">
+            <%= yield %>
+        </section>
+    </main>
+</body>
