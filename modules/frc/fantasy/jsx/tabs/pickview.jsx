@@ -6,7 +6,6 @@ class PicksView extends React.Component {
     }
 
     render() {
-        console.log("Render " + this.props.n + " " + this.props.mountTo.url)
         return (
             <table className="picks">
                 <thead>
@@ -18,17 +17,19 @@ class PicksView extends React.Component {
                 </thead>
                 <tbody>
                     {
-                        this.state.picks.map((team) => {
-                            return <tr className={ renderHelper.teamClass(team) }>
-                                <td> { renderHelper.renderTeam(team) } </td>
-                                <td> { team.spent } ₪</td>
-                                <td> { 
-                                    team.picks.map((pick) => { 
-                                        return pick.team 
-                                    }).join(", ")
-                                } </td>
-                            </tr>
-                        })
+                        this.state.picks
+                            .sort((a,b) => a.team.localeCompare(b.team))
+                            .map((team) => {
+                                return <tr className={ renderHelper.teamClass(team) }>
+                                    <td> { renderHelper.renderTeam(team) } </td>
+                                    <td> { team.spent } ₪</td>
+                                    <td> { 
+                                        team.picks.map((pick) => { 
+                                            return pick.team 
+                                        }).join(", ")
+                                    } </td>
+                                </tr>
+                            })
                     }
                 </tbody>
             </table>

@@ -10,6 +10,18 @@
     color: #5f975f !important;
 }
 
+.gold {
+    color: #ac921e !important;
+}
+
+.silver {
+    color: #999999 !important;
+}
+
+.bronze {
+    color: #755730 !important;
+}
+
 td {
     padding-top: 0;
     padding-bottom: 0;
@@ -29,4 +41,8 @@ table {
 
 html {
     overflow-y: scroll;
+}
+
+h4 {
+    margin-bottom: 0;
 }

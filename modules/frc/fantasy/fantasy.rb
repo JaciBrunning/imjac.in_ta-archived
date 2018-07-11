@@ -12,7 +12,7 @@ class FantasyModule < Sinatra::Base
 
     picks = FFPicks.new("pickem", "https://docs.google.com/spreadsheets/d/e/2PACX-1vQjcb0R67aRvvSIOdrZNofq1pPZ4JbZ9WtNII4N2skgZhIw4m2hjQcO28kHEQN3YfI-ZchEUUTHMSoe/pub?gid=1028864003&single=true&output=csv")
     hosts = FFPicks.new("host", "https://docs.google.com/spreadsheets/d/e/2PACX-1vQjcb0R67aRvvSIOdrZNofq1pPZ4JbZ9WtNII4N2skgZhIw4m2hjQcO28kHEQN3YfI-ZchEUUTHMSoe/pub?gid=2122248721&single=true&output=csv")
-    liveevent = FRCLiveEvent.new("2018dar")
+    liveevent = FRCLiveEvent.new("2018dar") # Until the event goes live, we're just going to use darwin
 
     get "/?" do
         @title = "Fantasy FIRST"
@@ -21,6 +21,7 @@ class FantasyModule < Sinatra::Base
             :'fanfirst/fanfirst',
             :'fanfirst/title',
             :'fanfirst/selector',
+            :'fanfirst/hideable',
             :'fanfirst/tabs/pickview',
             :'fanfirst/tabs/pointsview',
             :'fanfirst/tabs/leaderboard'
@@ -34,8 +35,12 @@ class FantasyModule < Sinatra::Base
     end
 
     get "/setevent/:event" do |evkey|
-        liveevent.stop
-        liveevent = FRCLiveEvent.new(evkey)
+        if ENV["WEBCORE_DEVENV"].nil?
+            "<h1> Stop </h1> <img src=\"https://i.imgur.com/w4OAQwt.gif\"> </img>"
+        else
+            liveevent.stop
+            liveevent = FRCLiveEvent.new(evkey)
+        end
     end
 
     get "/picks.json" do

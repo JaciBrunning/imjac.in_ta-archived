@@ -82,8 +82,7 @@ class RenderHelper {
     
         return <span>
             {
-                isDQ ? <i className="fas fa-exclamation-triangle"> </i> : 
-                    isHost ? <i className="fas fa-microphone"> </i> : ""
+                isDQ ? <i className="fas fa-exclamation-triangle"> </i> : ""
             } &nbsp;
             {team.team + (isDQ ? " (OVER BUDGET)" : "")}
         </span>

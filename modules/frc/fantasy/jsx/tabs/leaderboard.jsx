@@ -1,15 +1,13 @@
 class LeaderboardView extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { points: {}, picks: [], host_picks: [] }
+        this.state = { points: {}, picks: [] }
         frcpoints.mount((data) => { this.setState({points: data}) })
-        picks.mount((data) => { this.setState({picks: data}) })
-        host_picks.mount((data) => { this.setState({host_picks: data}) })
+        this.props.mountTo.mount((data) => { this.setState({picks: data}) })
     }
 
     mapTeams() {
-        let combined =  this.state.picks.concat(this.state.host_picks)
-        return combined.map((pickTeam) => {
+        return this.state.picks.map((pickTeam) => {
             let mapped = pickTeam.picks.map((picked) => {
                 return { team: picked.team, pts: this.state.points[picked.team] }
             }).filter((val) => { return val.pts != undefined && val.pts != null })
@@ -30,13 +28,20 @@ class LeaderboardView extends React.Component {
         })
     }
 
-    csvData() {
-        return this.mapTeams()
-                .sort((a,b) => b.total-a.total)
-                .map((entry) => {
-                    return [entry.team.team, entry.total]
-                })
-    }
+    mapMedals() {
+        let medals = ["gold", "silver", "bronze"]
+        let mapped = this.mapTeams().sort((a,b) => b.total - a.total)
+        let medalvals = [... new Set(mapped.map((entry) => entry.total))]
+                            .map((t,idx) => { return { total: t, medal: medals[idx] } })
+                            .filter((v) => { return v != undefined && v != null })
+                            .reduce((m, o) => { m[o.total] = o.medal; return m }, {})
+        console.log(medalvals)
+        if (Object.keys(medalvals).length < 3) medalvals = {}
+        return mapped.map((entry) => {
+            entry.medal = medalvals[entry.total]
+            return entry
+        })
+    } 
 
     render() {
         return (
@@ -53,11 +58,15 @@ class LeaderboardView extends React.Component {
                             </thead>
                             <tbody>
                                 {
-                                    this.mapTeams()
+                                    this.mapMedals()
                                         .sort((a,b) => b.total-a.total)
                                         .map((entry) => {
                                             return <tr className={renderHelper.teamClass(entry.team)} >
                                                 <td> 
+                                                    { 
+                                                        entry.medal != undefined ?
+                                                            <i className={ "fas fa-medal " + entry.medal }> </i> : ""
+                                                    } &nbsp;
                                                     { renderHelper.renderTeam(entry.team) }
                                                 </td>
                                                 <td> { entry.total } </td>
@@ -76,4 +85,11 @@ class LeaderboardView extends React.Component {
             </div>
         )
     }
+}
+
+function renderHostsLeaderboard(id) {
+    let el =    <Hideable name="Hosts Leaderboard">
+                    <LeaderboardView mountTo={host_picks} />
+                </Hideable>
+    ReactDOM.render(el, document.getElementById(id))
 }
