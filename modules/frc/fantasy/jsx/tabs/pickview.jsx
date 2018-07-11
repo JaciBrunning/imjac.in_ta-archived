@@ -2,10 +2,11 @@ class PicksView extends React.Component {
     constructor(props) {
         super(props)
         this.state = { picks: [] }
-        picks.mount((data) => { this.setState({picks: data}) })
+        this.props.mountTo.mount((data) => { this.setState({picks: data}) })
     }
 
     render() {
+        console.log("Render " + this.props.n + " " + this.props.mountTo.url)
         return (
             <table className="picks">
                 <thead>
@@ -18,8 +19,8 @@ class PicksView extends React.Component {
                 <tbody>
                     {
                         this.state.picks.map((team) => {
-                            return <tr className={ team.spent > 100 ? "red" : "" }>
-                                <td> { team.team } </td>
+                            return <tr className={ renderHelper.teamClass(team) }>
+                                <td> { renderHelper.renderTeam(team) } </td>
                                 <td> { team.spent } ₪</td>
                                 <td> { 
                                     team.picks.map((pick) => { 

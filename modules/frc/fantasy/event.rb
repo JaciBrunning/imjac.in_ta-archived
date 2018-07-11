@@ -26,14 +26,23 @@ class FRCLiveEvent
     def initialize event_code
         @event_code = event_code
         @apikey = ENV['TBA_API_KEY'] || DEFAULT_API_KEY
-        update_event
+
+        set_event_info("...", "...", "...")
+        @points = {  }
+        @points_json = "[]"
+        
+        Jobs.submit(Job.new("Update Fantasy FIRST Event Info #{@event_code}") { update_event })
 
         # Once per minute
-        @job = Job.new("Update Fantasy FIRST Data", 60, true) {
+        @job = Job.new("Update Fantasy FIRST Data #{@event_code}", 60, true) {
             update
         }
-        @job.run
+        @job.immediate = true
         Jobs.submit(@job)
+    end
+
+    def stop
+        Jobs.pull(@job)
     end
 
     def request path
@@ -45,8 +54,16 @@ class FRCLiveEvent
         @event_info = {
             name: req["name"],
             year: req["year"],
-            key: req["key"],
-            pconfig: @points_config
+            key: req["key"]
+        }
+        @event_info_json = JSON.generate(@event_info)
+    end
+
+    def set_event_info name, year, key
+        @event_info = {
+            name: name,
+            year: year,
+            key: key
         }
         @event_info_json = JSON.generate(@event_info)
     end

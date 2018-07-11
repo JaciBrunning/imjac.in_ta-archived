@@ -10,8 +10,9 @@ FileUtils.mkdir_p FANTASY_WWW_FOLDER
 class FantasyModule < Sinatra::Base
     register Extensions::Resources
 
-    picks = FFPicks.new
-    liveevent = FRCLiveEvent.new("2018iri")
+    picks = FFPicks.new("pickem", "https://docs.google.com/spreadsheets/d/e/2PACX-1vQjcb0R67aRvvSIOdrZNofq1pPZ4JbZ9WtNII4N2skgZhIw4m2hjQcO28kHEQN3YfI-ZchEUUTHMSoe/pub?gid=1028864003&single=true&output=csv")
+    hosts = FFPicks.new("host", "https://docs.google.com/spreadsheets/d/e/2PACX-1vQjcb0R67aRvvSIOdrZNofq1pPZ4JbZ9WtNII4N2skgZhIw4m2hjQcO28kHEQN3YfI-ZchEUUTHMSoe/pub?gid=2122248721&single=true&output=csv")
+    liveevent = FRCLiveEvent.new("2018dar")
 
     get "/?" do
         @title = "Fantasy FIRST"
@@ -32,9 +33,19 @@ class FantasyModule < Sinatra::Base
         redirect "/"
     end
 
-    get "/entries.json" do
+    get "/setevent/:event" do |evkey|
+        liveevent.stop
+        liveevent = FRCLiveEvent.new(evkey)
+    end
+
+    get "/picks.json" do
         content_type 'application/json'
         picks.get
+    end
+
+    get "/hosts.json" do
+        content_type 'application/json'
+        hosts.get
     end
 
     get "/event.json" do

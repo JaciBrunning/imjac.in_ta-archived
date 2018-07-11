@@ -1,13 +1,15 @@
 class LeaderboardView extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { points: {}, picks: [] }
+        this.state = { points: {}, picks: [], host_picks: [] }
         frcpoints.mount((data) => { this.setState({points: data}) })
         picks.mount((data) => { this.setState({picks: data}) })
+        host_picks.mount((data) => { this.setState({host_picks: data}) })
     }
 
     mapTeams() {
-        return this.state.picks.map((pickTeam) => {
+        let combined =  this.state.picks.concat(this.state.host_picks)
+        return combined.map((pickTeam) => {
             let mapped = pickTeam.picks.map((picked) => {
                 return { team: picked.team, pts: this.state.points[picked.team] }
             }).filter((val) => { return val.pts != undefined && val.pts != null })
@@ -54,10 +56,10 @@ class LeaderboardView extends React.Component {
                                     this.mapTeams()
                                         .sort((a,b) => b.total-a.total)
                                         .map((entry) => {
-                                            return <tr className={ entry.team.spent > 100 ? "red" : "" } >
-                                                <td> { entry.team.team +
-                                                    (entry.team.spent > 100 ? " (OVER BUDGET) [DQ]" : "")
-                                                } </td>
+                                            return <tr className={renderHelper.teamClass(entry.team)} >
+                                                <td> 
+                                                    { renderHelper.renderTeam(entry.team) }
+                                                </td>
                                                 <td> { entry.total } </td>
                                                 <td> {
                                                     (entry.highest_earner == undefined ? "-" : (

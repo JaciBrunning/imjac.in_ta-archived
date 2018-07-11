@@ -10,6 +10,7 @@ class TitleView extends React.Component {
         if (!this.state.refreshing) {
             this.setState({refreshing: true, refresh_marked: false})
             frcpoints.refresh()
+            frcevent.refresh()
         }
     }
 
