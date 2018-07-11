@@ -2,6 +2,8 @@ require 'json'
 require 'csv'
 require 'open-uri'
 require 'jobs'
+require 'date'
+require 'tzinfo'
 
 # TODO: I should split TBA requests into their own utility class
 class FRCLiveEvent
@@ -11,6 +13,8 @@ class FRCLiveEvent
 
     attr_accessor :points_json
     attr_accessor :event_info_json
+
+    attr_accessor :has_data
 
     # The TBA devs are fine with me sharing this key. This is the default, you can override it with the
     # TBA_API_KEY environment variable.
@@ -30,6 +34,8 @@ class FRCLiveEvent
         set_event_info("...", "...", "...")
         @points = {  }
         @points_json = "[]"
+        @event_started = false
+        @has_data = false
         
         Jobs.submit(Job.new("Update Fantasy FIRST Event Info #{@event_code}") { update_event })
 
@@ -49,14 +55,14 @@ class FRCLiveEvent
         JSON.parse open("https://www.thebluealliance.com/api/v3/#{path}?X-TBA-Auth-Key=#{@apikey}").read
     end
 
+    def started?
+        @event_started
+    end
+
     def update_event
         req = request "event/#{event_code}/simple"
-        @event_info = {
-            name: req["name"],
-            year: req["year"],
-            key: req["key"]
-        }
-        @event_info_json = JSON.generate(@event_info)
+        set_event_info req["name"], req["year"], req["key"]
+        @has_data = true
     end
 
     def set_event_info name, year, key
@@ -71,6 +77,8 @@ class FRCLiveEvent
     def update
         teams = request "event/#{event_code}/teams/statuses"
         matches = request "event/#{event_code}/matches/simple"
+
+        @event_started = !matches.empty?
 
         @points = {  }
         teams.each do |team, status|
@@ -112,7 +120,7 @@ class FRCLiveEvent
                     points[t][:total] += winval
                     points[t][winkey] += 1
                 }
-            elsif winner = "red"
+            elsif winner == "red"
                 red.each { |t|
                     points[t][:total] += winval
                     points[t][winkey] += 1

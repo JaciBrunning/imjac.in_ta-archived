@@ -1,0 +1,7 @@
+<% if @event.has_data %>
+    <h2> Fantasy FIRST - <%= @event.event_info[:year] %> <%= @event.event_info[:name] %> </h2>
+    <h5> This event hasn't started yet (no matches have been played) </h5>
+<% else %>
+    <h2> Fantasy FIRST </h2>
+    <h5> No event data available :( </h5>
+<% end %>

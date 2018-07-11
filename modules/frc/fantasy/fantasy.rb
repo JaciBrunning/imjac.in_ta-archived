@@ -16,18 +16,23 @@ class FantasyModule < Sinatra::Base
 
     get "/?" do
         @title = "Fantasy FIRST"
-        @js = [
-            :react,
-            :'fanfirst/fanfirst',
-            :'fanfirst/title',
-            :'fanfirst/selector',
-            :'fanfirst/hideable',
-            :'fanfirst/tabs/pickview',
-            :'fanfirst/tabs/pointsview',
-            :'fanfirst/tabs/leaderboard'
-        ]
-        @css = [:fantasyfirst]
-        erb :index
+        if liveevent.started?
+            @js = [
+                :react,
+                :'fanfirst/fanfirst',
+                :'fanfirst/title',
+                :'fanfirst/selector',
+                :'fanfirst/hideable',
+                :'fanfirst/tabs/pickview',
+                :'fanfirst/tabs/pointsview',
+                :'fanfirst/tabs/leaderboard'
+            ]
+            @css = [:fantasyfirst]
+            erb :index
+        else
+            @event = liveevent
+            erb :notready
+        end
     end
 
     get "/ta/?" do

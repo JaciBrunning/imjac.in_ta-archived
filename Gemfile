@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 # Server
 gem "rack", "2.0.1"
-gem "sinatra", "2.0.0"
+gem "sinatra", "2.0.2"
 gem "thin", "1.7.2"
 gem "sinatra-websocket", "0.3.1"
 
@@ -24,3 +24,4 @@ gem "rugged", "0.26.0"
 gem "json", "2.0.4"
 gem "babel-transpiler", "0.7.0"
 gem "wisper", "2.0.0"
+gem "tzinfo", "1.2.5"
