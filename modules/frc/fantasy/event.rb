@@ -103,7 +103,7 @@ class FRCLiveEvent
         end
 
         matches.each do |match|
-            red = match["alliances"]["blue"]["team_keys"].map { |t| t[3..-1].to_i }
+            red = match["alliances"]["red"]["team_keys"].map { |t| t[3..-1].to_i }
             blue = match["alliances"]["blue"]["team_keys"].map { |t| t[3..-1].to_i }
             elim = match["comp_level"] != "qm"
             winner = match["winning_alliance"]
