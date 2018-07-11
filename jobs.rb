@@ -31,10 +31,6 @@ class Job
     def run
         @action.call() unless @cancelled
     end
-
-    def hash
-        name.hash
-    end
 end
 
 class Jobs
@@ -57,6 +53,13 @@ class Jobs
         job.submit_time = Time.now
         @jobs_mtx.synchronize {
             @jobs << job
+        }
+    end
+
+    def self.pull job
+        puts "[JOBS] Pulling #{job.name}"
+        @jobs_mtx.synchronize {
+            @jobs.delete(job)
         }
     end
 
