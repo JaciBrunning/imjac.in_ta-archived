@@ -12,7 +12,7 @@ class FantasyModule < Sinatra::Base
 
     picks = FFPicks.new("pickem", "https://docs.google.com/spreadsheets/d/e/2PACX-1vQjcb0R67aRvvSIOdrZNofq1pPZ4JbZ9WtNII4N2skgZhIw4m2hjQcO28kHEQN3YfI-ZchEUUTHMSoe/pub?gid=1028864003&single=true&output=csv")
     hosts = FFPicks.new("host", "https://docs.google.com/spreadsheets/d/e/2PACX-1vQjcb0R67aRvvSIOdrZNofq1pPZ4JbZ9WtNII4N2skgZhIw4m2hjQcO28kHEQN3YfI-ZchEUUTHMSoe/pub?gid=2122248721&single=true&output=csv")
-    liveevent = FRCLiveEvent.new("2018dar") # Until the event goes live, we're just going to use darwin
+    liveevent = FRCLiveEvent.new("2018iri")
 
     get "/?" do
         @title = "Fantasy FIRST"
