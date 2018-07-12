@@ -13,10 +13,11 @@ class FantasyModule < Sinatra::Base
     picks = FFPicks.new("pickem", "https://docs.google.com/spreadsheets/d/e/2PACX-1vQjcb0R67aRvvSIOdrZNofq1pPZ4JbZ9WtNII4N2skgZhIw4m2hjQcO28kHEQN3YfI-ZchEUUTHMSoe/pub?gid=1028864003&single=true&output=csv")
     hosts = FFPicks.new("host", "https://docs.google.com/spreadsheets/d/e/2PACX-1vQjcb0R67aRvvSIOdrZNofq1pPZ4JbZ9WtNII4N2skgZhIw4m2hjQcO28kHEQN3YfI-ZchEUUTHMSoe/pub?gid=2122248721&single=true&output=csv")
     liveevent = FRCLiveEvent.new("2018iri")
+    LIVE_OVERRIDE = true    # Push the site live before the event starts, so people can see what's going on.
 
     get "/?" do
         @title = "Fantasy FIRST"
-        if liveevent.started?
+        if liveevent.started? || LIVE_OVERRIDE
             @js = [
                 :react,
                 :'fanfirst/fanfirst',
