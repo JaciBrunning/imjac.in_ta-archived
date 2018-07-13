@@ -108,23 +108,37 @@ class FRCLiveEvent
             elim = match["comp_level"] != "qm"
             winner = match["winning_alliance"]
             
-            winkey = elim ? :ewins : :qwins
-            winval = POINTS[elim ? :ewin : :qwin]
-            if winner.empty? && !elim
-                (red + blue).each { |t| 
-                    points[t][:total] += POINTS[:qtie]
-                    points[t][:ties] += 1
-                }
-            elsif winner == "blue"
-                blue.each { |t| 
-                    points[t][:total] += winval
-                    points[t][winkey] += 1
-                }
-            elsif winner == "red"
-                red.each { |t|
-                    points[t][:total] += winval
-                    points[t][winkey] += 1
-                }
+            unless match["alliances"]["red"]["score"] == -1
+                winkey = elim ? :ewins : :qwins
+                winval = POINTS[elim ? :ewin : :qwin]
+                if winner.empty? && !elim
+                    (red + blue).each { |t| 
+                        unless points[t].nil?
+                            points[t][:total] += POINTS[:qtie]
+                            points[t][:ties] += 1
+                        else
+                            puts "TEAM NOT REGISTERED!!! #{t}"
+                        end
+                    }
+                elsif winner == "blue"
+                    blue.each { |t| 
+                        unless points[t].nil?
+                            points[t][:total] += winval
+                            points[t][winkey] += 1
+                        else
+                            puts "TEAM NOT REGISTERED!!! #{t}"
+                        end
+                    }
+                elsif winner == "red"
+                    red.each { |t|
+                        unless points[t].nil?
+                            points[t][:total] += winval
+                            points[t][winkey] += 1
+                        else
+                            puts "TEAM NOT REGISTERED!!! #{t}"
+                        end
+                    }
+                end
             end
         end
 
