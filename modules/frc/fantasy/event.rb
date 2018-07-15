@@ -95,7 +95,9 @@ class FRCLiveEvent
                 alliancenum = alliance["number"].to_i
                 alliancepick = alliance["pick"].to_i 
 
-                p[:draft] = [ 17 - alliancenum, 17 - alliancenum, alliancenum, 0, 0 ][alliancepick]
+                # p[:draft] = [ 17 - alliancenum, 17 - alliancenum, alliancenum, 0, 0 ][alliancepick]
+                doa = [ alliancenum, alliancenum, 8 + alliancenum, 25 - alliancenum ][alliancepick]
+                p[:draft] = [17 - doa, 0].max
                 p[:total] += p[:draft]
             end
 
