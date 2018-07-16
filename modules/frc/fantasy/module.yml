@@ -1,3 +1,4 @@
+id: fantasyfirst
 modules:
     - fantasy.rb
 disabled: true

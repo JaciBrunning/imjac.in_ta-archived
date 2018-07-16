@@ -1,5 +1,3 @@
+id: management
 modules:
     - management_module.rb
-
-libraries:
-    - management_library.rb

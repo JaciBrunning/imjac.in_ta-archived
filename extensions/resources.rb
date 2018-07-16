@@ -5,11 +5,11 @@ require 'babel/transpiler'
 require 'pathname'
 require 'libs'
 
-RES_BUILD_FOLDER = File.join(web_root(), '_build/resources')
+RES_BUILD_FOLDER = File.join(@webcore.web_root, '_build/resources')
 CSS_BUILD_FOLDER = File.join(RES_BUILD_FOLDER, 'css')
 
 # TODO: Switch this over to a minified version for prod
-JS_FOLDER = File.join(web_root(), 'js')
+JS_FOLDER = File.join(@webcore.web_root, 'js')
 JS_BUILD_FOLDER = File.join(RES_BUILD_FOLDER, 'js')
 
 module Extensions
@@ -36,7 +36,7 @@ end
 
 class CSSBuilder < Builder
     def initialize cssfile, cssname, options={}
-        options[:includes] ||= [ File.join(web_root(), 'css/sass') ]
+        options[:includes] ||= [ File.join(@webcore.web_root, 'css/sass') ]
 
         @options = options
         @cssfile = cssfile
@@ -98,6 +98,6 @@ class JSBuilder < Builder
     end
 end
 
-Builders.register :css,      CSSBuilder.new(File.join(web_root(), 'css/sass/milligram_jaci/milligram_jaci.sass'), 'milligram_jaci.css', lib: :jaci)
-Builders.register :css_blog, CSSBuilder.new(File.join(web_root(), 'css/sass/blog/blog.scss'), 'blog.css')
+Builders.register :css,      CSSBuilder.new(File.join(@webcore.web_root, 'css/sass/milligram_jaci/milligram_jaci.sass'), 'milligram_jaci.css', lib: :jaci)
+Builders.register :css_blog, CSSBuilder.new(File.join(@webcore.web_root, 'css/sass/blog/blog.scss'), 'blog.css')
 # Builders.register :jsx,         JSBuilder.new(File.join(web_root(), 'jsx'))
