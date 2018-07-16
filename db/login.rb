@@ -6,6 +6,7 @@ module Database
     class Login
         @db = Database::connect
         SCHEMA = Sequel[:login]
+        @db.create_schema(SCHEMA, if_not_exists: true)
 
         # Create Tables
         @db.create_table? SCHEMA[:users] do

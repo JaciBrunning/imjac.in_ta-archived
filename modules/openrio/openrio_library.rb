@@ -4,6 +4,7 @@ module OpenRIO
     class DB
         @db = Database::connect
         SCHEMA = Sequel[:openrio]
+        @db.create_schema(SCHEMA, if_not_exists: true)
 
         # Create Tables
         @db.create_table? SCHEMA[:telemetry_reports] do
