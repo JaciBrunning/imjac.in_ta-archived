@@ -1,5 +1,4 @@
 require 'thread'
-require 'array_queue'
 
 class Job
     attr_accessor :name

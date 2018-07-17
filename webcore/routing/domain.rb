@@ -1,8 +1,11 @@
 module Webcore
     class Domain
         attr_reader :priority
+        attr_reader :id
+        attr_reader :server
 
-        def initialize regex, server, priority
+        def initialize id, regex, server, priority
+            @id = id
             @regex = regex
             @server = server
             @priority = priority
