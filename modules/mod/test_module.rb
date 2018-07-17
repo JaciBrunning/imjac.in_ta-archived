@@ -1,18 +1,20 @@
 require 'webcore/base'
+require 'webcore/extensions/memcache'
 
 class TestModule < ::Webcore::Base
+    register ::Webcore::Extensions::Memcache
+    set :memcache_namespace, "TestModule"
+
     get "/" do
-        puts env
-        "HELLO 2"
+        cache "index" do
+            puts "Fetching"
+            "HELLO WORLD"
+        end
     end
 
-    get "/cron" do
-        puts "CRON TRIGGERED: "
+    get "/expire/?" do
+        expire "index"
     end
 end
 
 @webcore.domains.register :test, /.*/, TestModule.new
-@webcore.cron.register @webcore.domains[:test].server, :cron1, "0 0 0 0 0", "/cron"
-
-puts "Calling..."
-@webcore.cron.jobs.each(&:run)

@@ -6,7 +6,7 @@ module Database
     end
 
     def self.connect
-        Sequel.connect(ENV['WEBCORE_DB_URL'].strip)
+        Sequel.connect(ENV['WEBCORE_DB_URL'] || 'postgres://web:web@localhost/web')
     end
 
     def self.wrap_validation error_callback, &block

@@ -1,3 +1,0 @@
-require 'jobs'
-
-Jobs.start
