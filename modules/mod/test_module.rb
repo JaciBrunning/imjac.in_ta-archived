@@ -1,5 +1,5 @@
 require 'webcore/base'
-require 'webcore/extensions/memcache'
+require 'webcore/cache/memcache'
 
 class TestModule < ::Webcore::Base
     register ::Webcore::Extensions::Memcache
