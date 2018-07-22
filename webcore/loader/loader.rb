@@ -1,5 +1,6 @@
-require_relative 'config_context.rb'
-require_relative 'module_context.rb'
+require_relative 'config_context'
+require_relative '../module'
+require_relative '../services'
 
 module Webcore
     class Loader
@@ -21,16 +22,16 @@ module Webcore
 
         def configure config_files
             config_files.map do |cfile|
-                # Eval is dangerous, but for a config file in a controlled environment it's fine.
                 ctx = ConfigContext.new cfile
                 config = ctx.load
                 config
             end
         end
 
-        def contextualize config_objs, webcore
+        def load_modules config_objs, webcore
             config_objs.map do |c|
-                ctx = ModuleContext.new c, webcore
+                services = Services.new webcore
+                ctx = Module.new c, services
                 webcore.modules[c.id] = ctx
                 ctx
             end
@@ -45,7 +46,7 @@ module Webcore
         def run! webcore
             cfiles = discover
             configs = configure cfiles
-            ctxs = contextualize configs, webcore
+            ctxs = load_modules configs, webcore
             load_contexts ctxs
         end
     end

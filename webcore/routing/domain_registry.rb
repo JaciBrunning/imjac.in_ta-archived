@@ -6,9 +6,8 @@ module Webcore
             @domains = []
         end
 
-        def register id, domain_regex, server, options={}
-            options = { priority: 50 }.merge(options)
-            register_domain Domain.new(id, domain_regex, server, options[:priority])
+        def register id, domain_regex, server, priority
+            register_domain Domain.new(id, domain_regex, server, priority)
         end
 
         def register_domain domain
@@ -17,11 +16,11 @@ module Webcore
         end
 
         def query domain_str
-            @domains.first { |d| d.matches?(domain_str) }
+            @domains.find { |d| d.matches?(domain_str) }
         end
 
         def [] id
-            @domains.first { |x| x.id == id }
+            @domains.find { |x| x.id == id }
         end
 
         def get

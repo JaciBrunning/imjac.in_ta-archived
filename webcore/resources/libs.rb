@@ -3,6 +3,13 @@ module Webcore
         def initialize
             @js = {}
             @css = {}
+
+            register_defaults
+        end
+
+        def register_defaults
+            register_css :fontawesome, "https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+            register_js :react, "https://unpkg.com/react@15/dist/react.min.js", "https://unpkg.com/react-dom@15/dist/react-dom.min.js"
         end
 
         def register_js id, *uris
@@ -37,11 +44,6 @@ module Webcore
 
         def css_uris *ids
             ids.map { |id| @css[id] }.flatten
-        end
-
-        def register_defaults
-            register_css :fontawesome, "https://use.fontawesome.com/releases/v5.1.0/css/all.css"
-            register_js :react, "https://unpkg.com/react@15/dist/react.min.js", "https://unpkg.com/react-dom@15/dist/react-dom.min.js"
         end
     end
 end

@@ -1,14 +1,13 @@
-require 'webcore/base'
 require 'webcore/cache/memcache'
 
-class TestModule < ::Webcore::Base
+class TestModule < WebcoreApp()
     register ::Webcore::Extensions::Memcache
     set :memcache_namespace, "TestModule"
 
     get "/" do
         cache "index" do
             puts "Fetching"
-            "HELLO WORLD"
+            webcore_module.id.to_s
         end
     end
 
@@ -16,5 +15,3 @@ class TestModule < ::Webcore::Base
         expire "index"
     end
 end
-
-@webcore.domains.register :test, /.*/, TestModule.new
