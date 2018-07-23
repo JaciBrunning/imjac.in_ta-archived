@@ -1,7 +1,7 @@
 module Webcore
     module CDNExtension
         def self.registered app
-            app.get '/cdn/:module/:resource' do |mod, resource|
+            app.get '/cdn/:module/:resource/?' do |mod, resource|
                 mod = app.services.webcore.modules[mod.to_sym]
                 unless mod.nil?
                     service = mod.services.cdn
@@ -19,7 +19,7 @@ module Webcore
                 end
             end
 
-            app.get '/cdn/:resource' do |resource|
+            app.get '/cdn/:resource/?' do |resource|
                 redirect "/cdn/#{this_module.id}/#{resource}"
             end
         end
