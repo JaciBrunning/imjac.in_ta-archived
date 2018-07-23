@@ -12,10 +12,10 @@ class CDNModule < WebcoreApp()
     end
 
     {
-        "milligram.css": "https://cdnjs.cloudflare.com/ajax/libs/milligram/1.3.0/milligram.min.css",
-        "fontawesome.css": "https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+        "milligram.css": "http://cdnjs.cloudflare.com/ajax/libs/milligram/1.3.0/milligram.min.css",
+        "fontawesome.css": "http://use.fontawesome.com/releases/v5.1.0/css/all.css"
     }.each do |key, value|
-        r = BufferResource.new(key.to_sym, value)
+        r = RedirectResource.new(key.to_sym, value)
         r.memcache = true
         services.cdn.register r
     end

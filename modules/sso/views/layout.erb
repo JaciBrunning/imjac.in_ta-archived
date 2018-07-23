@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title><%= @title %></title>
+    <link href="/cdn/cdn/milligram.css" rel="stylesheet" />
+</head>
+<body>
+    <main class="wrapper">
+        <nav class="navigation" id="navigation">
+            <section class="container">
+                <a class="button button-clear"> Single Sign-On </a>
+                <div style="float: right;">
+                    <a href="/" class="button button-clear"> Home </a>
+                </div>
+            </section>
+        </nav>
+
+
+        <section class="container body">
+            <%= yield %>
+        </section>
+    </main>
+</body>
