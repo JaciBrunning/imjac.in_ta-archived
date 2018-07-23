@@ -4,3 +4,5 @@ _db/
 .sass-cache
 Gemfile.lock
 .vs/
+
+node_modules

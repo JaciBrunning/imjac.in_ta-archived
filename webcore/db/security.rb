@@ -19,7 +19,7 @@ module Webcore
         def self.decrypt data, secret
             begin
                 AESCrypt.decrypt data, secret
-            rescue OpenSSL::Cipher::CipherError
+            rescue => e
                 nil
             end
         end

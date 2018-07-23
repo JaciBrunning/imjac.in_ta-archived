@@ -11,15 +11,15 @@ class SSOModule < WebcoreApp()
     register ::Webcore::CDNExtension
     set :root, File.dirname(__FILE__)
 
-    def self.write_token tok
+    def write_token tok
         cookies[:webcore_token] = Security.encrypt(tok, services.webcore.sso_secret)
     end
 
-    def self.read_token
+    def read_token
         Security.decrypt(cookies[:webcore_token], services.webcore.sso_secret)
     end
 
-    def self.delete_token
+    def delete_token
         cookies.delete :webcore_token
     end
 
@@ -47,7 +47,7 @@ class SSOModule < WebcoreApp()
     end
 
     post "/register/?" do
-        Auth::create params[:username], params[:email], params[:name], params[:password], true
+        Auth::create params[:username], params[:email], params[:name], params[:password], (Auth::User.count == 0)
         redirect "/login"
     end
 

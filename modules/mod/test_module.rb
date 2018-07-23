@@ -1,18 +1,17 @@
 require 'webcore/cdn/extension'
+require 'webcore/db/authextension'
 require 'sinatra/cookies'
 
 class TestModule < WebcoreApp()
-    helpers Sinatra::Cookies
-    enable :sessions
-    # set :session_secret, services.webcore.session_secret
-
+    register AuthExtension
     register ::Webcore::CDNExtension
 
     get "/?" do
         "Hello World"
     end
 
-    get "/readsession" do
-        Security.decrypt(cookies[:test], services.webcore.sso_secret)
+    get "/priviledged/?" do
+        auth!
+        "Hello #{@user.name}"
     end
 end
