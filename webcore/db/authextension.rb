@@ -1,3 +1,4 @@
+require 'sinatra/cookies'
 require_relative 'auth'
 
 module Webcore

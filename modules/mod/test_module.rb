@@ -1,10 +1,9 @@
 require 'webcore/cdn/extension'
 require 'webcore/db/authextension'
-require 'sinatra/cookies'
 
 class TestModule < WebcoreApp()
     register AuthExtension
-    register ::Webcore::CDNExtension
+    register CDNExtension
 
     get "/?" do
         "Hello World"
