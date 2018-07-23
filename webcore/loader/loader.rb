@@ -39,7 +39,7 @@ module Webcore
 
         def load_modules config_objs, webcore
             config_objs.map do |c|
-                services = Services.new webcore
+                services = Services.new webcore, c.id
                 mod = Module.new c, services
                 webcore.modules[c.id] = mod
                 mod.load

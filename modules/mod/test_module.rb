@@ -1,18 +1,10 @@
-require 'webcore/cache/memcache'
+require 'webcore/cdn/extension'
 
 class TestModule < WebcoreApp()
-    register ::Webcore::Extensions::Memcache
-    set :memcache_namespace, "TestModule"
+    register ::Webcore::CDNExtension
 
     get "/" do
-        cache "index" do
-            puts "Fetching"
-            webcore_module.id.to_s
-        end
-    end
-
-    get "/expire/?" do
-        expire "index"
+        "Hello World"
     end
 
     r = BufferResource.new(:"test.css", "https://cdnjs.cloudflare.com/ajax/libs/milligram/1.3.0/milligram.min.css")

@@ -23,7 +23,7 @@ module Webcore
         end
 
         def last_modified request, app
-            app.webcore_module.services.webcore.startup_time
+            app.services.webcore.startup_time
         end
 
         def construct_response content
