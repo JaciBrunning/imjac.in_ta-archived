@@ -5,10 +5,14 @@ module Extensions
     module Memcache
         module Helpers
             def cache key, ttl=nil, options={}, &block
-                begin
-                    cacher.fetch(key, ttl, options, &block)
-                rescue Dalli::RingError
-                    puts "!! Dalli not present!"
+                if settings.memcache_enabled
+                    begin
+                        cacher.fetch(key, ttl, options, &block)
+                    rescue Dalli::RingError
+                        puts "!! Dalli not present!"
+                        block.call
+                    end
+                else
                     block.call
                 end
             end
@@ -34,6 +38,7 @@ module Extensions
             app.set :memcache_addr, "127.0.0.1:11211"
             app.set :memcache_namespace, nil
             app.set :memcache_options, { compress: true, expires_in: 1800 }
+            app.set :memcache_enabled, true
         end
     end
 end

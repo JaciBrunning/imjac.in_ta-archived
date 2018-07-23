@@ -1,14 +1,14 @@
-require_relative 'resources/libs'
+require_relative 'cdn/cdn'
 require_relative 'webcore'
 
 module Webcore
     class Services
         attr_reader :webcore
-        attr_reader :libs
+        attr_reader :cdn
 
         def initialize webcore
             @webcore = webcore
-            @libs = Libs.new
+            @cdn = CDNService.new
         end
     end
 end

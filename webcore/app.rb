@@ -5,11 +5,10 @@ module Webcore
     class App < Sinatra::Base
         configure :development do
             puts "WARNING: DEV MODE!"
-            register Sinatra::Reloader
         end
 
         module ClassMethods
-            attr_reader :webcore_module
+            attr_reader :this_module
 
             def create_app mod
                 klass = Class.new(self)
@@ -18,24 +17,32 @@ module Webcore
             end
 
             def set_module mod
-                @webcore_module = mod
+                @this_module = mod
             end
 
             def inherited subclass
                 super
                 if self != App
                     # We're in a subclass, copy over the data we need
-                    subclass.set_module @webcore_module
+                    subclass.set_module @this_module
                     # Also register the domain
-                    @webcore_module.register_domain subclass
+                    @this_module.register_domain subclass
                 end
             end
         end
 
-        def webcore_module
-            self.class.webcore_module
+        module AllMethods
+            def services
+                this_module.services
+            end
+        end
+
+        def this_module
+            self.class.this_module
         end
 
         extend ClassMethods
+        extend AllMethods
+        include AllMethods
     end
 end
