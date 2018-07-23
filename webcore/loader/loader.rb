@@ -21,33 +21,36 @@ module Webcore
         end
 
         def configure config_files
+            ids = []
             config_files.map do |cfile|
                 ctx = ConfigContext.new cfile
                 config = ctx.load
-                config
-            end
+                id = config.id
+                unless ids.include? id
+                    puts "[LOADER] Loaded Module Config: #{id} -> #{cfile}"
+                    ids << id
+                    config
+                else
+                    puts "[LOADER] * Duplicate Module ID Found: #{id}, ignoring..."
+                    nil
+                end
+            end.reject(&:nil?)
         end
 
         def load_modules config_objs, webcore
             config_objs.map do |c|
                 services = Services.new webcore
-                ctx = Module.new c, services
-                webcore.modules[c.id] = ctx
-                ctx
-            end
-        end
-
-        def load_contexts ctxs
-            ctxs.each do |ctx|
-                ctx.load
+                mod = Module.new c, services
+                webcore.modules[c.id] = mod
+                mod.load
+                puts "[LOADER] Loaded Module: #{mod.id}"
             end
         end
 
         def run! webcore
             cfiles = discover
             configs = configure cfiles
-            ctxs = load_modules configs, webcore
-            load_contexts ctxs
+            load_modules configs, webcore
         end
     end
 end

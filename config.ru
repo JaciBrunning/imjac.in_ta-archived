@@ -8,7 +8,7 @@ require 'webcore/routing/middleware'
 WEBROOT = File.dirname(__FILE__)
 
 WEBCORE = Webcore::Webcore.new WEBROOT
-LOADER = Webcore::Loader.new([ "#{WEBROOT}/modules" ])
+LOADER = Webcore::Loader.new([ "#{WEBROOT}/modules", "." ])
 
 LOADER.run! WEBCORE
 

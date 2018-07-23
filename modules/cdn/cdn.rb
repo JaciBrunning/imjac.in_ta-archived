@@ -1,6 +1,6 @@
 require 'webcore/cache/memcache'
 
-class TestModule < WebcoreApp()
+class CDNModule < WebcoreApp()
     register ::Webcore::Extensions::Memcache
     set :memcache_namespace, "CDN"
     set :memcache_enabled, !development?
