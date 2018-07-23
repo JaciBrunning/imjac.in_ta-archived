@@ -7,7 +7,7 @@ module Webcore
         attr_accessor :search_paths
 
         def initialize search_paths
-            @search_paths = search_paths
+            @search_paths = search_paths.map { |path| File.expand_path(path) }
         end
 
         def discover
