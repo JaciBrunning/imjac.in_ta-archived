@@ -19,12 +19,9 @@ class TestModule < WebcoreApp()
                 else
                     r.respond
                 end
-            else
-                [404, nil, nil]
             end
-        else
-            [404, nil, nil]
         end
+        [404, nil, nil]
     end
 
     not_found do
