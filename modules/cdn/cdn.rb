@@ -7,6 +7,10 @@ class CDNModule < WebcoreApp()
         redirect "/cdn/#{mod}/#{resource}"
     end
 
+    get "/:resource" do |resource|
+        redirect "/cdn/#{resource}"
+    end
+
     not_found do
         "The resource you're looking for could not be located!"
     end
