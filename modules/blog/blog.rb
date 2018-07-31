@@ -5,10 +5,6 @@ class BlogModule < WebcoreApp()
     set :public_folder, BlogConstants::HTML_DIR
     register CDNExtension
 
-    get '/ta/?' do
-        send_file File.join(settings.public_folder, 'ta/index.html')
-    end
-
     get '/' do
         redirect '/ta'
     end
