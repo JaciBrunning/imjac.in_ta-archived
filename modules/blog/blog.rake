@@ -32,8 +32,9 @@ namespace :blog do
         task :build do
             require 'sass'
 
-            template = File.read("#{BlogConstants::BLOG_DIR}/css/sass/blog/blog.scss")
-            engine = Sass::Engine.new(template, { syntax: :scss, style: :compressed })
+            engine = Sass::Engine.for_file("#{BlogConstants::BLOG_DIR}/css/sass/blog/blog.scss", { 
+                style: :compressed,
+            })
             FileUtils.mkdir_p "#{BlogConstants::CSS_DIR}"
             File.write("#{BlogConstants::CSS_DIR}/blog.min.css", engine.render)
         end
