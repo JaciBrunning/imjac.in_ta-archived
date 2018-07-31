@@ -2,7 +2,7 @@
 title: I'm Jac.in/ta
 email: jaci.brunning@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
-  Jaci R. A running log of what a young software dev gets up to in her spare time. FRC Team 5333 / OpenRIO / ICAS Comp Sci #1 2014 / Scitech GT
+  I write code for people who write code for people who drive robots.
 baseurl: "/ta"
 url: "http://imjac.in" # the base hostname & protocol for your site
 twitter_username: JacisNonsense
