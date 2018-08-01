@@ -1,9 +1,0 @@
-id: openrio
-
-modules:
-    - openrio_module.rb
-
-libraries:
-    - openrio_library.rb
-
-disabled: true

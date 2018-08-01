@@ -1,4 +1,0 @@
-id: development
-modules:
-    - dev_module.rb
-disabled: true
