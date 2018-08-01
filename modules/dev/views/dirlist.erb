@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Directory Listing for <%= @path.empty? ? "/" : @path %></title>
-    <%= Libs.css :jaci, :fontawesome %>
+    <link href="/cdn/cdn/fontawesome.css" rel="stylesheet">
+    <link href="/cdn/cdn/milligram.css" rel="stylesheet">
 </head>
 <body>
     <main class="wrapper">
@@ -17,7 +18,7 @@
                 </tr>
                 <% unless @path.empty? || @path == '/' %>
                     <tr>
-                        <td> <a href="../"> <i class="fa fa-level-up" aria-hidden="true"></i> ../ </a> </td>
+                        <td> <a href="../"> <i class="fas fa-level-up" aria-hidden="true"></i> ../ </a> </td>
                         <td> </td>
                         <td> </td>
                     </tr>
@@ -25,9 +26,9 @@
                 <% Pathname.new(@directory).children.sort.each do |child| %>
                     <% dir, symlink = [File.directory?(child), File.symlink?(child)] %>
                     <tr>
-                        <td> <a href="<%= File.basename(child) %><%= dir ? '/' : ''%>"> <i class="fa fa-<%= dir ? 'folder-open-o' : symlink ? 'long-arrow-right' :'file-o' %>" aria-hidden="true"></i> <%= File.basename(child) %> </a> </td>
+                        <td> <a href="<%= File.basename(child) %><%= dir ? '/' : ''%>"> <i class="fas fa-<%= dir ? 'folder-open-o' : symlink ? 'long-arrow-right' :'file-o' %>" aria-hidden="true"></i> <%= File.basename(child) %> </a> </td>
                         <td> <%= File.mtime(child).strftime("%e %b %Y (%l:%M:%S %P UTC%:z)") %> </td>
-                        <td> <%= dir ? '<i>Directory</i>' : symlink ? '<i>Symbolic Link</i>' : Utils.filesize(File.size(child)) %> </td>
+                        <td> <%= dir ? '<i>Directory</i>' : symlink ? '<i>Symbolic Link</i>' : filesize(File.size(child)) %> </td>
                     </tr>
                 <% end %>
             </table>
