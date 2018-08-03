@@ -21,11 +21,12 @@ class BlogModule < WebcoreApp()
         if File.exists?(composite_file)
             send_file composite_file
         else
+            puts "NF"
             status 404
         end
     end
 
     blog_css = FileResource.new :"blog.css", File.join(BlogConstants::CSS_DIR, "blog.min.css")
     blog_css.memcache = true
-    services.cdn.register blog_css
+    services[:cdn].register blog_css
 end
