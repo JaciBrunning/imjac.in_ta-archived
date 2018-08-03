@@ -21,7 +21,6 @@ class BlogModule < WebcoreApp()
         if File.exists?(composite_file)
             send_file composite_file
         else
-            puts "NF"
             status 404
         end
     end
