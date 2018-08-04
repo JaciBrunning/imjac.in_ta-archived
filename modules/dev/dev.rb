@@ -7,8 +7,6 @@ class BlogModule < WebcoreApp()
     set :public_folder, "#{File.dirname(__FILE__)}/_public"
     set :views, "#{File.dirname(__FILE__)}/views"
 
-    FileUtils.mkdir_p settings.public_folder
-
     get "/ta/?" do
         redirect "/"
     end

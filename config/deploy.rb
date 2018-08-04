@@ -15,7 +15,16 @@ namespace :deploy do
         end
     end
 
+    desc "Link Maven Dev"
+    task :dev_maven do
+        on roles(:app) do
+            execute "mkdir -p #{release_path}/modules/dev/_public"
+            execute "ln -sf /home/maven/public #{release_path}/modules/dev/_public/maven"
+        end
+    end
+
     after "bundler:install", "deploy:rake_install"
+    after "deploy:rake_install", "deploy:dev_maven"
     after :deploy, "service:restart"
 end
 
