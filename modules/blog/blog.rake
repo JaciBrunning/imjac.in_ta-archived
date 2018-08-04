@@ -8,7 +8,7 @@ namespace :blog do
 
     desc "Clean Blog"
     task :clean do
-        FileUtils.rm_r BlogConstants::BUILD_DIR
+        FileUtils.rm_r BlogConstants::BUILD_DIR if File.exist? BlogConstants::BUILD_DIR
     end
 
     namespace :jekyll do
