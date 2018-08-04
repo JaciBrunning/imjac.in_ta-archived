@@ -5,3 +5,5 @@ Rake.add_rakelib 'modules/blog'
 
 task :build => ["blog:build"]
 task :clean => ["blog:clean"]
+
+task :install => ["clean", "build"]
