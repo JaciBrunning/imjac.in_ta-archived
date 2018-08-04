@@ -23,8 +23,17 @@ namespace :deploy do
         end
     end
 
+    desc "Activate Module"
+    task :activate do
+        on roles(:app) do
+            execute "mkdir -p /etc/www/webcore/modules"
+            execute "ln -sf #{release_path} /etc/www/webcore/modules/imjac.in_ta"
+        end
+    end
+
     after "bundler:install", "deploy:rake_install"
     after "deploy:rake_install", "deploy:dev_maven"
+    after :deploy, "deploy:activate"
     after :deploy, "service:restart"
 end
 
