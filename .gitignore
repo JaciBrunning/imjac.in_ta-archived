@@ -1,4 +1,4 @@
 build
-Gemfile.lock
 .sass-cache/
 _public
+log/
