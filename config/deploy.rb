@@ -15,6 +15,7 @@ namespace :deploy do
         end
     end
 
+    # Maven user must be added manually with 'sudo adduser --gecos "" maven'
     desc "Link Maven Dev"
     task :dev_maven do
         on roles(:app) do
