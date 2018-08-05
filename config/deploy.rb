@@ -1,7 +1,7 @@
 set :application, 'imjac.in_ta'
 
 set :repo_url, 'https://github.com/JacisNonsense/imjac.in_ta.git'
-set :branch, 'restructure'
+set :branch, 'master'
 
 set :user, 'deploy'
 
