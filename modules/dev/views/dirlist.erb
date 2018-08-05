@@ -26,7 +26,7 @@
                 <% Pathname.new(@directory).children.select(&:exist?).sort.each do |child| %>
                     <% dir, symlink = [File.directory?(child), File.symlink?(child)] %>
                     <tr>
-                        <td> <a href="<%= File.basename(child) %><%= dir ? '/' : ''%>"> <i class="fas fa-<%= dir ? 'folder-open-o' : symlink ? 'long-arrow-right' :'file-o' %>" aria-hidden="true"></i> <%= File.basename(child) %> </a> </td>
+                        <td> <a href="<%= File.basename(child) %><%= dir ? '/' : ''%>"> <i class="far fa-<%= dir ? 'folder-open' : symlink ? 'long-arrow-right' : 'file' %>" aria-hidden="true"></i> <%= File.basename(child) %> </a> </td>
                         <td> <%= File.mtime(child).strftime("%e %b %Y (%l:%M:%S %P UTC%:z)") %> </td>
                         <td> <%= dir ? '<i>Directory</i>' : symlink ? '<i>Symbolic Link</i>' : filesize(File.size(child)) %> </td>
                     </tr>
