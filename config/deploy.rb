@@ -28,7 +28,7 @@ namespace :deploy do
     task :activate do
         on roles(:app) do
             execute "mkdir -p /etc/www/webcore/modules"
-            execute "ln -sf #{release_path} /etc/www/webcore/modules/imjac.in_ta"
+            execute "ln -sfn #{release_path} /etc/www/webcore/modules/imjac.in_ta"
         end
     end
 
