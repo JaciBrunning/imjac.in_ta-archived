@@ -17,4 +17,9 @@ class ProjectModule < WebcoreApp()
     get "/?" do
         redirect "/ta"
     end
+
+    get "/ta" do
+        @title = "Index"
+        erb :index
+    end
 end
