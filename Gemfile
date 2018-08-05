@@ -9,6 +9,8 @@ gem "rouge", "1.11.1"
 # Other
 gem "rake", "12.3.1"
 
+gem "icalendar", "2.3.0"
+
 # Deployment
 group :development do
     gem 'capistrano',         require: false

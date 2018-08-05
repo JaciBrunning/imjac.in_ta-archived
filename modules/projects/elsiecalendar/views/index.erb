@@ -1,0 +1,53 @@
+<h2> Elsie Calendar Exporter </h2>
+
+<% if params[:error] %>
+<h5> Error: <%= params[:error] %> </h5>
+<% end %>
+
+<div class="container">
+    <h2> Step 1: Generate Calendar File </h2>
+    <form id="login" method="POST">
+    <div class="row">
+        <div class="column">
+            <input type="text" placeholder="Curtin ID" id="curtin_login" name="curtin_login" required>
+            <input type="password" placeholder="Curtin Password" id="curtin_password" name="curtin_password" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <label for="start_date">Start Date</label>
+            <input type="date" id="start_date" name="start_date" min="2018-01-01" max="2018-12-31" value="2018-07-30">
+        </div>
+        <div class="column">
+            <label for="end_date">End Date</label>
+            <input type="date" id="end_date" name="end_date" min="2018-01-01" max="2018-12-31" value="2018-12-31">
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <input type="submit" class="button-primary" value="Generate Calendar!">
+        </div>
+    </div>
+    </form>
+
+    <h2> Step 2: Import Calendar </h2>
+    <p> All of these require you to import the .ics file generated above, so make sure you put it in a safe place! </p>
+    <p> I recommend in each of these that you create a new calendar with your calendar app, since it will let you delete all of it at once in case the generated calendar is incorrect. </p>
+    <div class="row">
+        <div class="column">
+            <h4> Google Calendar </h4>
+            <a href="https://calendar.google.com/calendar/r/settings/createcalendar" target="about:blank" class="button button-clear"> Create Google Calendar </a>
+            <a href="https://calendar.google.com/calendar/r/settings/export" target="about:blank" class="button button-clear"> Import Elsie Calendar </a>
+        </div>
+        <div class="column">
+            <h4> iCal (Mac) </h4>
+            <p> File -> New Calendar </p>
+            <p> File -> Import... </p>
+        </div>
+        <div class="column">
+            <h4> Outlook 365 (Email) </h4>
+            <p> Your calendars -> "+" (left column) </p>
+            <p> Add calendar -> From file (top snackbar) </p>
+        </div>
+    </div>
+</div>
