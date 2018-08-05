@@ -1,9 +1,15 @@
 require_relative 'constants.rb'
 require 'webcore/cdn/extension'
+require 'webcore/db/authextension'
 
 class BlogModule < WebcoreApp()
     set :public_folder, BlogConstants::HTML_DIR
     register CDNExtension
+    register AuthExtension
+
+    before do 
+        https!
+    end
 
     get '/' do
         redirect '/ta'
