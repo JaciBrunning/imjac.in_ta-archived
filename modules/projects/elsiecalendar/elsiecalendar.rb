@@ -31,7 +31,6 @@ module ElsieCalendar
                 response['Content-Disposition'] = "attachment; filename=Curtin_#{user}_#{startdate.strftime('%Y%m%d')}_#{enddate.strftime('%Y%m%d')}.ics"
                 timetable.calendar.to_ical
             rescue => e
-                raise e
                 redirect "/ta/elsie?error=Unknown Error"
             end
         end
