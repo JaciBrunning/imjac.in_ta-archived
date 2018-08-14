@@ -13,6 +13,7 @@ module ElsieCalendar
         end
 
         app.post "/ta/elsie/?" do
+            return "Curtin doesn't want this website to exist anymore. Sorry :( http://news.curtin.edu.au/stories/keep-curtin-student-credentials-safe-using-third-party-apps-services/"
             https!
             begin
                 user = params["curtin_login"]
