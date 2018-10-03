@@ -1,6 +1,9 @@
+require 'webcore/cdn/extension'
 require_relative 'cache'
 
 class WPIMirrorModule < WebcoreApp()
+  register CDNExtension
+
   WPI_MAVEN="http://first.wpi.edu/FRC/roborio/maven"
   SIZELIMIT=1*(1000*1000*1000)  # 1GB (conservative)
 
@@ -8,6 +11,12 @@ class WPIMirrorModule < WebcoreApp()
     release: WPIMirrorCache.new("#{WPI_MAVEN}/release", "/tmp/wpimirror/release", SIZELIMIT),
     development: WPIMirrorCache.new("#{WPI_MAVEN}/development", "/tmp/wpimirror/development", SIZELIMIT)
   }
+
+  set :public_folder, "#{File.dirname(__FILE__)}/public"
+
+  get "/?" do
+    redirect '/index.html'
+  end
 
   get "/m2/:branch/*" do |branch, artifact_path|
     branch = branch.to_sym

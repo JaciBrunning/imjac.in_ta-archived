@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>WPILib Mirror (AU)</title>
+    <link href="/cdn/cdn/milligram.css" rel="stylesheet">
+</head>
+<body>
+    <main class="wrapper">
+        <div class="container">
+            <h2> WPILib Mirror (AU) </h2>
+            <p> This is a mirror for <a href="http://first.wpi.edu/FRC/roborio/maven/">http://first.wpi.edu/FRC/roborio/maven/</a> for both the release and development branch. </p>
+            <h4> Should I use this? </h4>
+            <p> This server is located in Australia and is designed to serve the Southern Hemisphere where ping times to the official site may be large. </p>
+            <p> Artifacts on this server may time out, in which case they will redownload asynchronously when a request is made. For this reason, the first request you make for each artifact may be redirected to the official US server. </p>
+            <p> This server is limited to a maximum of 1GB of total artifacts. </p>
+            <hr />
+            <h4> Using the mirror </h4>
+            <p> Add the following to your build.gradle in order to use this repository (GradleRIO 2019 Beta or Later): </p>
+            <pre><code>
+wpi.maven {
+    useMirror("AU")
+}
+            </code></pre>
+
+            <hr />
+            <h4> Extra info </h4> 
+            <p> If you choose to download an artifact and immediately 404 instead of being redirected to the US site, you can append <code>?no-redirect</code> to the URI your request </p>
+            <p> This server does not have a directory listing engine. </p> 
+            <p> This server, or this section of the server, may go down at any time. Your build.gradle will fallback to the official US site. </p>
+        </div>
+    </main>
+</body>
