@@ -5,7 +5,7 @@ date: 2019-01-11 01:00:00
 categories: frc, code
 ---
 
-In all the buzz of build season, it's common that we forget what we're meant to be teaching. In terms of programming and coding skills, well-structured programs and good practice are often foregone in favour of unstructured spaghetti designed to 'just get the robot moving'. In this post, we'll be talking about how to solve the "mechanical team isn't ready yet" dependency problem.
+In all the buzz of build season, it's common that we forget what we're meant to be teaching. In terms of programming and coding skills, well-structured programs and good practice are often foregone in favour of unstructured spaghetti designed to 'just get the robot moving'. In this post, we'll be talking about how to structure our code for flexibility, reliability, and how to solve the "mechanical team isn't ready yet" dependency problem.
 
 <!-- excerpt -->
 
